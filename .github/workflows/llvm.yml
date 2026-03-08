@@ -7,7 +7,7 @@ on:
       pgo:
         description: "Build llvm with PGO"
         required: false
-        default: false
+        default: true
         type: boolean   
       no_save_cache:
         description: "Don't save caches after success build"
@@ -17,24 +17,19 @@ on:
       trigger_toolchain:
         description: "Trigger toolchain build action after success build"
         required: false
-        default: true
+        default: false
         type: boolean
       build_target:
         description: "Toolchain build target"
         required: false
-        default: "all-64bit"
+        default: "64bit"
         type: choice
         options:
-        - 32bit
         - 64bit
-        - 64bit-v3
-        - aarch64
-        - all-64bit
-        - all
       trigger_build:
         description: "Trigger mpv build action after toolchain build"
         required: false
-        default: true
+        default: false
         type: boolean
       release:
         description: "Publish a release after mpv build"
@@ -75,7 +70,7 @@ jobs:
       - name: Checkout toolchain
         uses: actions/checkout@v6
         with:
-          repository: shinchiro/mpv-winbuild-cmake
+          repository: Kosm8/mpv-winbuild-cmake
           path: mpv-winbuild-cmake
           fetch-depth: 0
 
@@ -93,7 +88,7 @@ jobs:
         with:
           bit: "64-v3"
           compiler: "clang"
-          command: "ninja -C $buildroot/build$bit rebuild_cache && cmake --build $buildroot/build$bit --target llvm-download && ninja -C $buildroot/build$bit llvm-clang"
+          command: "ninja -C $buildroot/build$bit rebuild_cache && cmake --build $buildroot/build$bit --target llvm-download && ninja -C $buildroot/build$bit llvm-clang && ninja -C $buildroot/build$bit harfbuzz mujs vulkan shaderc"
           extra_option: "-DLLVM_ENABLE_PGO=GEN -DLLVM_PROFILE_DATA_DIR=$buildroot/profiles/"
 
       - name: Merging profdata
@@ -102,7 +97,7 @@ jobs:
           shopt -s globstar
           cd mpv-winbuild-cmake/profiles/
           ls -R
-          llvm-profdata merge *.profraw -o ../llvm.profdata
+          llvm-profdata merge *.profraw -o ../llvm.profdata --sparse
           rm -rf ./{*,.*} || true
 
       - name: Build LLVM with PGO

@@ -20,17 +20,6 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Apply patch
-      shell: bash
-      run: |
-        set -x
-        cd mpv-winbuild-cmake
-        if [[ "$(ls -A ../patch/*.patch)" ]]; then
-          for patch in ../patch/*.patch ; do
-            git am --3way "$patch" || git am --abort
-          done
-        fi
-
     - name: Build
       shell: bash
       run: |
@@ -42,16 +31,13 @@ runs:
         buildroot=$(pwd)
         srcdir=$(pwd)/src_packages
 
-        if [ $bit == "32" ]; then
-            arch="i686"
-        elif [ $bit == "64" ]; then
+        if [ $bit == "64" ]; then
             arch="x86_64"
+            gcc_arch=-DGCC_ARCH=core2
         elif [ $bit == "64-v3" ]; then
             arch="x86_64"
             gcc_arch=-DGCC_ARCH=x86-64-v3
             x86_64_level=-v3
-        elif [ $bit == "aarch64" ]; then
-            arch="aarch64"
         fi
         set -x
         if [ "$compiler" == "clang" ]; then

@@ -12,20 +12,10 @@ on:
       build_target:
         description: "Build target"
         required: false
-        default: "all-64bit"
+        default: "64bit"
         type: choice
         options:
-        - 32bit
         - 64bit
-        - 64bit-v3
-        - aarch64
-        - all-64bit
-        - all
-      lgpl:
-        description: "Also build lgpl libmpv"
-        required: false
-        default: false
-        type: boolean
       compiler:
         required: false
         default: "clang"
@@ -50,9 +40,6 @@ on:
         type: boolean
       command:
         description: 'input command you want to run before build'
-        required: false
-      prs:
-        description: "Input the pr numbers of mpv,split items by comma(',')"
         required: false
       run_name:
         description: 'The name displayed in the list of workflow runs'
@@ -81,26 +68,11 @@ jobs:
             let matrix = {};
             let build_target = "${{ inputs.build_target }}"
             switch ( build_target ) {
-              case "32bit":
-                matrix.bit = ["32"];
-                break;
               case "64bit":
                 matrix.bit = ["64"];
                 break;
-              case "64bit-v3":
-                matrix.bit = ["64-v3"];
-                break;
-              case "aarch64":
-                matrix.bit = ["aarch64"];
-                break;
-              case "all-64bit":
-                matrix.bit = ["64","64-v3","aarch64"];
-                break;
-              case "all":
-                matrix.bit = ["32","64","64-v3","aarch64"];
-                break;
               default:
-                matrix.bit = ["64","64-v3","aarch64"];
+                matrix.bit = ["64"];
                 break;
             }
             core.setOutput("matrix_bit",JSON.stringify(matrix));
@@ -160,13 +132,6 @@ jobs:
             }
 
             core.setOutput("patch_note",patch_note.trim());
-      
-      - name: upload patch
-        uses: actions/upload-artifact@v7
-        if: ${{ steps.script.outputs.patch_note }}
-        with:
-          name: mpv-patch
-          path: "*.patch"
 
   build_mpv:
     name: Build MPV
@@ -196,7 +161,7 @@ jobs:
       - name: Checkout toolchain
         uses: actions/checkout@v6
         with:
-          repository: shinchiro/mpv-winbuild-cmake
+          repository: Kosm8/mpv-winbuild-cmake
           path: mpv-winbuild-cmake
           fetch-depth: 0
       - name: Prepare
@@ -310,34 +275,6 @@ jobs:
             sloppiness=locale,time_macros
             compiler_check=none
 
-      - name: Download mpv patch
-        if: ${{ needs.params.outputs.patch_note }}
-        uses: actions/download-artifact@v8
-        with:
-          name: mpv-patch
-          path: mpv-patch
-      - name: Apply mpv pr releated patch
-        if: ${{ needs.params.outputs.patch_note }}
-        continue-on-error: true
-        run: |
-          shopt -s globstar
-          cp mpv-patch/*.patch mpv-winbuild-cmake/packages
-          ls mpv-winbuild-cmake/packages/mpv-*.patch
-          cd mpv-winbuild-cmake
-          if [[ "$(ls -A ../patch_pr/0000-*.patch)" ]]; then
-            for patch in ../patch_pr/0000-*.patch ; do
-              git am --3way "$patch" || git am --abort
-            done
-          fi
-          for patch in packages/mpv-*.patch ; do
-            pr="$(echo ${patch#*#} | cut -d- -f1)"
-            if [[ "$(ls -A ../patch_pr/#${pr}-*.patch)" ]]; then
-              for p in ../patch_pr/#${pr}-*.patch ; do
-                git am --3way "$p" || git am --abort
-              done
-            fi
-          done
-
       - name: Running custom command
         if: ${{ inputs.command != '' }}
         shell: bash
@@ -352,16 +289,9 @@ jobs:
           srcdir=$(pwd)/src_packages
           
           builddir=$buildroot/build$bit
-          if [ $bit == "32" ]; then
-              arch="i686"
-          elif [ $bit == "64" ]; then
+          if [ $bit == "64" ]; then
               arch="x86_64"
-          elif [ $bit == "64-v3" ]; then
-              arch="x86_64"
-              gcc_arch=-DGCC_ARCH=x86-64-v3
-              x86_64_level=-v3
-          elif [ $bit == "aarch64" ]; then
-              arch="aarch64"
+              gcc_arch=-DGCC_ARCH=core2
           fi
           retry-tool() {
             local RETRY_COUNTER=0
@@ -383,14 +313,6 @@ jobs:
         run: |
           chmod +x build.sh
           cd mpv-winbuild-cmake
-          if [[ "$(ls -A ../patch/*.patch)" ]]; then
-            for patch in ../patch/*.patch ; do
-              git am --3way "$patch" || git am --abort
-            done
-          fi
-          if [ "${{ matrix.lgpl }}" = "true" ]; then
-            git am --3way ../compile-lgpl-libmpv.patch
-          fi
           bash ../build.sh -t '${{ matrix.bit }}' -c '${{ inputs.compiler }}' -s "${{ matrix.lgpl == true && 'true' || 'false' }}"
       - name: Collect logs
         if: ${{ always() }}
@@ -413,17 +335,8 @@ jobs:
             const lgpl = ${{ matrix.lgpl }} ? "-lgpl" : "";
             let arch="";
             switch ( "${{ matrix.bit }}" ) {
-              case "32":
-                arch = "i686";
-                break;
               case "64":
                 arch = "x86_64";
-                break;
-              case "64-v3":
-                arch = "x86_64-v3";
-                break;
-              case "aarch64":
-                arch = "aarch64";
                 break;
             }
             for (let type of types) {
@@ -664,10 +577,7 @@ jobs:
             note+="**Download Tips:**\n";
             const path = require('path');
             const tips = {
-              "i686": "for 32 bit system",
               "x86_64": "for 64 bit system",
-              "x86_64-v3": "for 64 bit system with cpu not older than Intel Haswell or AMD Excavator",
-              "aarch64": "for ARM64(aarch64)"
             }
             async function getTips(arch){
               const globber = await glob.create(`artifacts/mpv-${arch}-[0-9]*.7z`);
