@@ -20,7 +20,7 @@ string(REGEX MATCH "^[^-]+" TARGET_CPU ${TARGET_ARCH})
 if(TARGET_CPU STREQUAL "x86_64")
     set(TARGET_CPU_FAMILY "x86_64")
     set(TARGET_BITS 64)
-    set(GCC_ARCH "core2" CACHE STRING "Target architecture for x86_64")
+    set(GCC_ARCH "znver3" CACHE STRING "Target architecture for x86_64")
 endif()
 
 processorcount(CPU_COUNT)
