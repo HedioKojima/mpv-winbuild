@@ -107,7 +107,7 @@ jobs:
         run: |
           mkdir -p release
 
-          cmake -Wno-dev --fresh -DLLVM_LOCATION=$PWD/llvm -DMINGW_INSTALL_PREFIX=$PWD/build/install/x86_64-w64-mingw32 -DSINGLE_SOURCE_LOCATION=$PWD/src_packages -DRUST_LOCATION=$PWD/rust -G Ninja -B $PWD/build -S $PWD
+          cmake -Wno-dev --fresh -DGCC_ARCH=znver3 -DLLVM_LOCATION=$PWD/llvm -DMINGW_INSTALL_PREFIX=$PWD/build/install/x86_64-w64-mingw32 -DSINGLE_SOURCE_LOCATION=$PWD/src_packages -DRUST_LOCATION=$PWD/rust -G Ninja -B $PWD/build -S $PWD
 
           ninja -C $PWD/build download || true
           ninja -C $PWD/build update
