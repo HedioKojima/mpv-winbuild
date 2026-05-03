@@ -6,12 +6,7 @@ arch=('x86_64')
 url='https://mpv.io/'
 makedepends=("libjpeg-dev"
              "libpng-dev"
-             "libsdl2-dev"
-             "libsixel-dev"
-             "angle-headers-dev"
              "ffmpeg-dev"
-             "mujs-dev"
-             "rubberband-dev"
              "luajit2-dev" 
              "freetype2-dev"
              "fribidi-dev"
@@ -20,12 +15,10 @@ makedepends=("libjpeg-dev"
              "libass-dev"
              "lcms2-dev"
              "libbluray-dev"
-             "libdvdnav-dev"
              "libplacebo-dev"
              "shaderc-dev"
              "spirv-cross-dev"
              "subrandr-dev"
-             "vapoursynth-dev"
              "vulkan-dev"
              "zlib-dev")
 license=('GPL3')
@@ -42,21 +35,21 @@ build() {
     -Doptimization=3 \
     -Db_lto=true \
     -Db_lto_mode=thin \
-    -Dlibmpv=true \
+    -Dlibmpv=false \
     -Dlua=enabled \
-    -Djavascript=enabled \
-    -Dsdl2-gamepad=enabled \
+    -Djavascript=disabled \
+    -Dsdl2-gamepad=disabled \
     -Dsubrandr=enabled \
     -Dlibarchive=enabled \
     -Dlibbluray=enabled \
-    -Ddvdnav=enabled \
-    -Drubberband=enabled \
+    -Ddvdnav=disabled \
+    -Drubberband=disabled \
     -Dlcms2=enabled \
-    -Dopenal=enabled \
+    -Dopenal=disabled \
     -Dspirv-cross=enabled \
     -Dvulkan=enabled \
-    -Dvapoursynth=enabled \
-    -Degl-angle=enabled
+    -Dvapoursynth=disabled \
+    -Degl-angle=disabled
   LTO_JOB=1 PDB=1 meson compile -C build
   
   # get latest commit sha
@@ -67,19 +60,6 @@ build() {
 package_mpv-dev() {
   cd $srcdir/mpv
   DESTDIR=$pkgdir meson install -C build
-}
-
-package_libmpv-git() {
-  export PKGEXT='.pkg.tar.xz'
-  mkdir -p $pkgdir${MINGW_PREFIX}/libmpv/include/mpv
-  cd $srcdir/mpv/build
-  ${TARGET_ARCH}-strip -s libmpv-2.dll
-  mv libmpv-2.dll $pkgdir${MINGW_PREFIX}/libmpv
-  mv libmpv.dll.a $pkgdir${MINGW_PREFIX}/libmpv
-  mv ../include/mpv/client.h $pkgdir${MINGW_PREFIX}/libmpv/include/mpv
-  mv ../include/mpv/stream_cb.h $pkgdir${MINGW_PREFIX}/libmpv/include/mpv
-  mv ../include/mpv/render.h $pkgdir${MINGW_PREFIX}/libmpv/include/mpv
-  mv ../include/mpv/render_gl.h $pkgdir${MINGW_PREFIX}/libmpv/include/mpv
 }
 
 package_mpv-git() {
