@@ -8,7 +8,6 @@ makedepends=("bzip2-dev"
              "dav1d-dev"
              "ffnvcodec-dev"
              "lcms2-dev"
-             "libbs2b-dev"
              "libjxl-dev"
              "libplacebo-dev"
              "libwebp-dev"
@@ -54,7 +53,7 @@ package_ffmpeg-dev() {
     --enable-lcms2 \
     --disable-libaom \
     --disable-libaribcaption \
-    --enable-libbs2b \
+    --disable-libbs2b \
     --enable-libdav1d \
     --disable-libdavs2 \
     --enable-libjxl \
