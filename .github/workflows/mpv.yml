@@ -119,7 +119,6 @@ jobs:
       - name: Setup Packages
         run: |
           curl -OL https://github.com/${{ github.repository }}/releases/download/latest-$COMPILER-$BIT/ffmpeg-git-8.1-1-x86_64.pkg.tar.xz
-          curl -OL https://github.com/${{ github.repository }}/releases/download/latest-$COMPILER-$BIT/libmpv-git-0.41.0-1-x86_64.pkg.tar.xz
           curl -OL https://github.com/${{ github.repository }}/releases/download/latest-$COMPILER-$BIT/mpv-git-0.41.0-1-x86_64.pkg.tar.xz
           pacman -U *.xz --noconfirm
       - name: Get ffmpeg latest commit sha
@@ -131,7 +130,6 @@ jobs:
           curl -OL https://github.com/yt-dlp/yt-dlp/releases/download/2026.03.17/yt-dlp.exe
           mv yt-dlp.exe ${{ env.top_dir }}/opt/mpv
           7z a mpv-$COMPILER-$BIT.7z ${{ env.top_dir }}/opt/mpv/*
-          7z a libmpv-$COMPILER-$BIT.7z ${{ env.top_dir }}/opt/libmpv/*
           7z a ffmpeg-$COMPILER-$BIT-${{ env.ffmpeg_sha }}.7z ${{ env.top_dir }}/opt/ffmpeg/*
       - name: Release
         run: ./release-package.sh
