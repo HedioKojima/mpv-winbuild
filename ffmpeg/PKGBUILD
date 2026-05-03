@@ -75,7 +75,6 @@ package_ffmpeg-dev() {
     --disable-libuavs3d \
     --disable-libvorbis \
     --disable-libvpx \
-    --disable-libvvdec \
     --enable-libwebp \
     --enable-libxml2 \
     --disable-libxvid \
