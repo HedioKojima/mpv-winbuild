@@ -95,7 +95,6 @@ jobs:
       - bzip2
       - dav1d
       - ffnvcodec
-      - libbs2b
       - libjxl
       - libplacebo
       - libwebp
@@ -138,7 +137,6 @@ jobs:
           curl -OL https://github.com/${{ github.repository }}/releases/download/dev-$COMPILER-$BIT/freetype2-dev-2_14_3-1-x86_64.pkg.tar.zst
           curl -OL https://github.com/${{ github.repository }}/releases/download/dev-$COMPILER-$BIT/highway-dev-1.4.0-1-x86_64.pkg.tar.zst
           curl -OL https://github.com/${{ github.repository }}/releases/download/dev-$COMPILER-$BIT/lcms2-dev-2.19-1-x86_64.pkg.tar.zst
-          curl -OL https://github.com/${{ github.repository }}/releases/download/dev-$COMPILER-$BIT/libbs2b-dev-3.1.0-1-x86_64.pkg.tar.zst
           curl -OL https://github.com/${{ github.repository }}/releases/download/dev-$COMPILER-$BIT/libiconv-dev-1.19-1-x86_64.pkg.tar.zst
           curl -OL https://github.com/${{ github.repository }}/releases/download/dev-$COMPILER-$BIT/libjpeg-dev-3.1.90-1-x86_64.pkg.tar.zst
           curl -OL https://github.com/${{ github.repository }}/releases/download/dev-$COMPILER-$BIT/libjxl-dev-0.11.2-1-x86_64.pkg.tar.zst                
@@ -516,37 +514,6 @@ jobs:
           cd libbluray-dev; sudo -H -E -u builder makepkg-cross-${COMPILER%%-*}
       - name: Release
         run: ./release-dev.sh libbluray-dev libbluray-dev
-
-  libbs2b:
-    runs-on: ubuntu-latest
-    env:
-      COMPILER: ${{ inputs.compiler }}
-      BIT: ${{ inputs.build_target }}
-      GH_TOKEN: ${{ secrets.BOT }} 
-    container:
-      image: docker://ghcr.io/eko5624/archlinux:latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@main      
-      - name: Add builder user
-        run: |
-          useradd builder -m
-          echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
-          install -m644 pacman-config/makepkg_cross_${COMPILER%%-*}.conf /etc/
-          install -m755 pacman-config/makepkg-cross-${COMPILER%%-*} /usr/bin/
-      - name: Setting top_dir env
-        run: echo "top_dir=$(cd ~ && pwd)" >> $GITHUB_ENV
-      - name: Loading ${{ inputs.compiler }}-${{ inputs.build_target }} cache
-        uses: actions/cache@main
-        with:
-          path: ${{ env.top_dir }}/cross
-          key: ${{ inputs.compiler }}-${{ inputs.build_target }}
-      - name: Build
-        run: |
-          sudo chmod 777 -R ${{ env.top_dir }} .
-          cd libbs2b-dev; sudo -H -E -u builder makepkg-cross-${COMPILER%%-*}
-      - name: Release
-        run: ./release-dev.sh libbs2b-dev libbs2b-dev
 
   libiconv:
     runs-on: ubuntu-latest
