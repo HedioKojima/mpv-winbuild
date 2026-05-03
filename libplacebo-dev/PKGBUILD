@@ -8,7 +8,7 @@ makedepends=('lcms2-dev' 'vulkan-dev' 'shaderc-dev' 'spirv-cross-dev' 'xxhash-de
 license=('LGPL')
 source=("git+https://github.com/haasn/libplacebo.git"
         "git+https://github.com/fastfloat/fast_float.git")
-md5sums=('SKIP' 'SKIP' 'SKIP')
+md5sums=('SKIP' 'SKIP')
 
 build() {
   cd $srcdir/libplacebo
