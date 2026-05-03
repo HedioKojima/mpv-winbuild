@@ -21,6 +21,7 @@ build() {
     --buildtype=release \
     --default-library=static \
     -Ddemos=false \
+    -Dopengl=disabled \
     -Dvulkan-registry="${MINGW_PREFIX}/share/vulkan/registry/vk.xml"
   meson compile -C build
 }
