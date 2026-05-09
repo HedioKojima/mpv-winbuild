@@ -22,7 +22,7 @@ build() {
     --default-library=static \
     -Ddemos=false \
     -Dopengl=disabled \
-    -Dvulkan-registry="${MINGW_PREFIX}/share/vulkan/registry/vk.xml"
+    -Dvulkan=disabled
   meson compile -C build
 }
 
