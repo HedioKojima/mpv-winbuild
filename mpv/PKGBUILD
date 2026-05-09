@@ -50,7 +50,10 @@ build() {
     -Dspirv-cross=enabled \
     -Dvulkan=enabled \
     -Dvapoursynth=disabled \
-    -Degl-angle=disabled
+    -Degl-angle=disabled \
+    -Dcplugins=disabled \
+    -Dd3d9-hwaccel=disabled \
+    -Ddirect3d=disabled
   LTO_JOB=1 PDB=1 meson compile -C build
   
   # get latest commit sha
