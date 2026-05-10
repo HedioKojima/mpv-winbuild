@@ -96,7 +96,6 @@ package_ffmpeg-dev() {
     --disable-bsfs \
     --disable-filters \
     --enable-filter=bwdif,rotate,vflip \
-    --disable-encoders \
     --disable-decoder=aac_fixed,ac3_fixed,mp1,mp2,mp3,mp3adu,mp3on4
   make DESTDIR=$pkgdir install
   rm -rf $pkgdir${MINGW_PREFIX}/bin $pkgdir${MINGW_PREFIX}/share $pkgdir${MINGW_PREFIX}/lib/*.def
