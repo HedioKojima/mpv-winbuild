@@ -92,16 +92,18 @@ package_ffmpeg-dev() {
     --disable-encoder=opus \
     --disable-encoder=vorbis \
     --disable-vdpau \
-    --disable-devices \
-    --disable-bsfs \
-    --disable-filters \
-    --enable-filter=bwdif,rotate,vflip \
+    --disable-muxers \
+    --enable-muxer=image2 \
+    --enable-muxer=gif \
+    --enable-muxer=webp \
+    --enable-muxer=avif \
     --disable-encoders \
     --enable-encoder=png \
     --enable-encoder=libwebp \
-    --enable-encoder=libwebp_anim \
     --enable-encoder=libjxl \
     --enable-encoder=mjpeg \
+    --enable-encoder=png \
+    --enable-encoder=gif \
     --enable-encoder=libsvtav1 \
     --disable-decoder=aac_fixed,ac3_fixed,mp1,mp2,mp3,mp3adu,mp3on4
   make DESTDIR=$pkgdir install
