@@ -19,6 +19,7 @@ build() {
     --disable-bsdcat \
     --disable-bsdcpio \
     --without-cng \
+    --without-openssl \
     --without-libb2 \
     --without-lz4 \
     --with-bz2lib \
