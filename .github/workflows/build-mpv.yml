@@ -100,7 +100,6 @@ jobs:
       - libwebp
       - libxml2
       - libzimg
-      - openssl
       - svtav1
       - xz
       - zlib
@@ -145,7 +144,6 @@ jobs:
           curl -OL https://github.com/${{ github.repository }}/releases/download/dev-$COMPILER-$BIT/libwebp-dev-1.6.0-1-x86_64.pkg.tar.zst
           curl -OL https://github.com/${{ github.repository }}/releases/download/dev-$COMPILER-$BIT/libxml2-dev-2.15.3-1-x86_64.pkg.tar.zst
           curl -OL https://github.com/${{ github.repository }}/releases/download/dev-$COMPILER-$BIT/libzimg-dev-3.0.6-1-x86_64.pkg.tar.zst
-          curl -OL https://github.com/${{ github.repository }}/releases/download/dev-$COMPILER-$BIT/openssl-dev-3.6.2-1-x86_64.pkg.tar.zst
           curl -OL https://github.com/${{ github.repository }}/releases/download/dev-$COMPILER-$BIT/shaderc-dev-2026.2-1-x86_64.pkg.tar.zst
           curl -OL https://github.com/${{ github.repository }}/releases/download/dev-$COMPILER-$BIT/spirv-cross-dev-1.4.341.0-1-x86_64.pkg.tar.zst
           curl -OL https://github.com/${{ github.repository }}/releases/download/dev-$COMPILER-$BIT/svtav1-dev-4.1.0-1-x86_64.pkg.tar.zst
@@ -435,7 +433,7 @@ jobs:
         run: ./release-dev.sh libass-dev libass-dev
 
   libarchive:
-    needs: [bzip2, libxml2, openssl, xz, zlib, zstd]
+    needs: [bzip2, libxml2, xz, zlib, zstd]
     runs-on: ubuntu-latest
     env:
       COMPILER: ${{ inputs.compiler }}
@@ -465,7 +463,6 @@ jobs:
           curl -OL https://github.com/${{ github.repository }}/releases/download/dev-$COMPILER-$BIT/bzip2-dev-1.0.8-1-x86_64.pkg.tar.zst
           curl -OL https://github.com/${{ github.repository }}/releases/download/dev-$COMPILER-$BIT/libiconv-dev-1.19-1-x86_64.pkg.tar.zst
           curl -OL https://github.com/${{ github.repository }}/releases/download/dev-$COMPILER-$BIT/libxml2-dev-2.15.3-1-x86_64.pkg.tar.zst
-          curl -OL https://github.com/${{ github.repository }}/releases/download/dev-$COMPILER-$BIT/openssl-dev-3.6.2-1-x86_64.pkg.tar.zst
           curl -OL https://github.com/${{ github.repository }}/releases/download/dev-$COMPILER-$BIT/xz-dev-5.8.3-1-x86_64.pkg.tar.zst
           curl -OL https://github.com/${{ github.repository }}/releases/download/dev-$COMPILER-$BIT/zlib-dev-2.3.3-1-x86_64.pkg.tar.zst
           curl -OL https://github.com/${{ github.repository }}/releases/download/dev-$COMPILER-$BIT/zstd-dev-1.5.7-1-x86_64.pkg.tar.zst
