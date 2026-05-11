@@ -19,6 +19,7 @@ makedepends=("libjpeg-dev"
              "shaderc-dev"
              "spirv-cross-dev"
              "subrandr-dev"
+             "vulkan-dev"
              "zlib-dev")
 license=('GPL3')
 source=("git+https://github.com/mpv-player/mpv.git")
@@ -47,7 +48,7 @@ build() {
     -Dlcms2=enabled \
     -Dopenal=disabled \
     -Dspirv-cross=enabled \
-    -Dvulkan=disabled \
+    -Dvulkan=enabled \
     -Dvapoursynth=disabled \
     -Degl-angle=disabled \
     -Dcplugins=disabled \
