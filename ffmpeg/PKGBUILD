@@ -47,6 +47,7 @@ package_ffmpeg-dev() {
     --extra-libs="${ffmpeg_extra_libs}" \
     --extra-ldflags="${ffmpeg_extra_ldflags}" \
     --disable-mediafoundation \
+    --enable-schannel \
     --disable-amf \
     --disable-avisynth \
     --enable-cuvid${ffmpeg_cuda_llvm} \
