@@ -13,7 +13,6 @@ makedepends=("bzip2-dev"
              "libwebp-dev"
              "libxml2-dev"
              "libzimg-dev"
-             "openssl-dev"
              "shaderc-dev"
              "svtav1-dev")
 license=('LGPL')
@@ -81,7 +80,7 @@ package_ffmpeg-dev() {
     --disable-libzvbi \
     --disable-openal \
     --disable-opengl \
-    --enable-openssl \
+    --disable-openssl \
     --enable-nvdec \
     --enable-nvenc \
     --disable-vaapi \
