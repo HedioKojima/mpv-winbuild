@@ -24,7 +24,6 @@ build() {
     --with-bz2lib \
     --with-iconv \
     --with-lzma \
-    --with-openssl \
     --with-xml2 \
     --with-zlib \
     --with-zstd
