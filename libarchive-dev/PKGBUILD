@@ -4,7 +4,7 @@ pkgrel=1
 pkgdesc='Multi-format archive and compression library'
 arch=('x86_64')
 url="https://www.libarchive.org/"
-makedepends=('bzip2-dev' 'libxml2-dev' 'xz-dev' 'zlib-dev' 'zstd-dev')
+makedepends=('xz-dev' 'zlib-dev' 'zstd-dev')
 license=("BSD")
 source=("git+https://github.com/libarchive/libarchive.git#tag=v$pkgver")
 md5sums=('SKIP')
@@ -18,14 +18,14 @@ build() {
     --disable-bsdtar \
     --disable-bsdcat \
     --disable-bsdcpio \
-    --without-cng \
+    --with-cng \
     --without-openssl \
     --without-libb2 \
     --without-lz4 \
-    --with-bz2lib \
+    --without-bz2lib \
     --with-iconv \
     --with-lzma \
-    --with-xml2 \
+    --without-xml2 \
     --with-zlib \
     --with-zstd
   make
