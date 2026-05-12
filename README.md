@@ -30,8 +30,9 @@ The FFmpeg and MPV library were built with the following libraries
 - libass/freetype2/fribidi/harfbuzz: Subtitle Support
 - luajit: Lua Plugin
 - shaderc/spirv/libplacebo: D3D11 & Vulkan Context
-- libbluray/libdvdnav/libdvdread/libdvdcss: Parsing BD/DVD
+- libbluray: Parsing BD
 - libdav1d: av1 decoding
 - libsvtav1：av1 encoding
-- libjxl: jxl decoding
-- libarchive：xz，zlib-ng
+- libwebp：webp decoding/encoding
+- libjxl/highway/brotli: jxl decoding/encoding
+- libarchive：xz，zlib-ng，bzip2，zstd，libxml2
