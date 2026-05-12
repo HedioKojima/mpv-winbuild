@@ -59,46 +59,13 @@ jobs:
       - name: Release
         run: ./release-dev.sh brotli-dev brotli-dev
 
-  bzip2:
-    runs-on: ubuntu-latest
-    env:
-      COMPILER: ${{ inputs.compiler }}
-      BIT: ${{ inputs.build_target }}
-      GH_TOKEN: ${{ secrets.BOT }} 
-    container:
-      image: docker://ghcr.io/eko5624/archlinux:latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@main      
-      - name: Add builder user
-        run: |
-          useradd builder -m
-          echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
-          install -m644 pacman-config/makepkg_cross_${COMPILER%%-*}.conf /etc/
-          install -m755 pacman-config/makepkg-cross-${COMPILER%%-*} /usr/bin/
-      - name: Setting top_dir env
-        run: echo "top_dir=$(cd ~ && pwd)" >> $GITHUB_ENV
-      - name: Loading ${{ inputs.compiler }}-${{ inputs.build_target }} cache
-        uses: actions/cache@main
-        with:
-          path: ${{ env.top_dir }}/cross
-          key: ${{ inputs.compiler }}-${{ inputs.build_target }}
-      - name: Build
-        run: |
-          sudo chmod 777 -R ${{ env.top_dir }} .
-          cd bzip2-dev; sudo -H -E -u builder makepkg-cross-${COMPILER%%-*}
-      - name: Release
-        run: ./release-dev.sh bzip2-dev bzip2-dev
-
   ffmpeg:
     needs:
-      - bzip2
       - dav1d
       - ffnvcodec
       - libjxl
       - libplacebo
       - libwebp
-      - libxml2
       - libzimg
       - svtav1
       - xz
@@ -130,7 +97,6 @@ jobs:
       - name: Build
         run: |
           curl -OL https://github.com/${{ github.repository }}/releases/download/dev-$COMPILER-$BIT/brotli-dev-1.2.0-1-x86_64.pkg.tar.zst
-          curl -OL https://github.com/${{ github.repository }}/releases/download/dev-$COMPILER-$BIT/bzip2-dev-1.0.8-1-x86_64.pkg.tar.zst
           curl -OL https://github.com/${{ github.repository }}/releases/download/dev-$COMPILER-$BIT/dav1d-dev-1.5.3-1-x86_64.pkg.tar.zst
           curl -OL https://github.com/${{ github.repository }}/releases/download/dev-$COMPILER-$BIT/ffnvcodec-dev-13.0.19.0-1-x86_64.pkg.tar.zst
           curl -OL https://github.com/${{ github.repository }}/releases/download/dev-$COMPILER-$BIT/freetype2-dev-2_14_3-1-x86_64.pkg.tar.zst
@@ -142,7 +108,6 @@ jobs:
           curl -OL https://github.com/${{ github.repository }}/releases/download/dev-$COMPILER-$BIT/libplacebo-dev-7.360.1-1-x86_64.pkg.tar.zst
           curl -OL https://github.com/${{ github.repository }}/releases/download/dev-$COMPILER-$BIT/libpng-dev-1.6.58-1-x86_64.pkg.tar.zst
           curl -OL https://github.com/${{ github.repository }}/releases/download/dev-$COMPILER-$BIT/libwebp-dev-1.6.0-1-x86_64.pkg.tar.zst
-          curl -OL https://github.com/${{ github.repository }}/releases/download/dev-$COMPILER-$BIT/libxml2-dev-2.15.3-1-x86_64.pkg.tar.zst
           curl -OL https://github.com/${{ github.repository }}/releases/download/dev-$COMPILER-$BIT/libzimg-dev-3.0.6-1-x86_64.pkg.tar.zst
           curl -OL https://github.com/${{ github.repository }}/releases/download/dev-$COMPILER-$BIT/shaderc-dev-2026.2-1-x86_64.pkg.tar.zst
           curl -OL https://github.com/${{ github.repository }}/releases/download/dev-$COMPILER-$BIT/spirv-cross-dev-1.4.341.0-1-x86_64.pkg.tar.zst
@@ -433,7 +398,7 @@ jobs:
         run: ./release-dev.sh libass-dev libass-dev
 
   libarchive:
-    needs: [bzip2, libxml2, xz, zlib, zstd]
+    needs: [xz, zlib, zstd]
     runs-on: ubuntu-latest
     env:
       COMPILER: ${{ inputs.compiler }}
@@ -460,9 +425,7 @@ jobs:
       - name: Build
         run: |
           curl -OL https://github.com/${{ github.repository }}/releases/download/dev-$COMPILER-$BIT/brotli-dev-1.2.0-1-x86_64.pkg.tar.zst
-          curl -OL https://github.com/${{ github.repository }}/releases/download/dev-$COMPILER-$BIT/bzip2-dev-1.0.8-1-x86_64.pkg.tar.zst
           curl -OL https://github.com/${{ github.repository }}/releases/download/dev-$COMPILER-$BIT/libiconv-dev-1.19-1-x86_64.pkg.tar.zst
-          curl -OL https://github.com/${{ github.repository }}/releases/download/dev-$COMPILER-$BIT/libxml2-dev-2.15.3-1-x86_64.pkg.tar.zst
           curl -OL https://github.com/${{ github.repository }}/releases/download/dev-$COMPILER-$BIT/xz-dev-5.8.3-1-x86_64.pkg.tar.zst
           curl -OL https://github.com/${{ github.repository }}/releases/download/dev-$COMPILER-$BIT/zlib-dev-2.3.3-1-x86_64.pkg.tar.zst
           curl -OL https://github.com/${{ github.repository }}/releases/download/dev-$COMPILER-$BIT/zstd-dev-1.5.7-1-x86_64.pkg.tar.zst
