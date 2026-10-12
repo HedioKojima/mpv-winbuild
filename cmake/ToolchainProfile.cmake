@@ -54,7 +54,7 @@ function(add_toolchain_profile profile cpu_flags)
 
     foreach(driver IN ITEMS clang clang++)
         set(DRIVER "${LLVM_BINARY_DIR}/${driver}")
-        configure_file("${profile_template_dir}/compiler.sh.in" "${BIN_DIR}/${TARGET_TRIPLE}-${driver}" @ONLY)
+        configure_file("${profile_template_dir}/clang.sh.in" "${BIN_DIR}/${TARGET_TRIPLE}-${driver}" @ONLY)
     endforeach()
 
     foreach(tool IN LISTS LLVM_BINUTILS)
