@@ -1,10 +1,10 @@
-# The CRT is built without LTO, as its startup objects and the functions code
-# generation calls into must stay native code, and without section splitting,
-# which gains little when most archive members hold a single function.
+# Built without LTO: the startup objects and the functions that code generation
+# calls must stay native code. Built without section splitting: most archive
+# members hold a single function.
 #
-# mingw-w64 builds the stack protector functions into libmingwex and installs
-# no libssp, while clang's MinGW driver links -lssp_nonshared -lssp for
-# -fstack-protector*, so empty archives are installed under those names.
+# clang's MinGW driver links -lssp_nonshared -lssp for -fstack-protector*, but
+# mingw-w64 has those functions in libmingwex and installs no libssp, so empty
+# archives are installed under those names.
 ExternalProject_Add(mingw-w64-crt
     DEPENDS
         mingw-w64

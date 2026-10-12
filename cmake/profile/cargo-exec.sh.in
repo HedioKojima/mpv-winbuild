@@ -1,7 +1,7 @@
 #!/bin/sh
-# Runs a command through the exec wrapper of the @PROFILE@ toolchain profile
-# with the Rust toolchain of RUSTUP_DIR: its programs in PATH behind the
-# profile's tools, and the cargo linkers for the target and the build machine.
+# Runs a command through the exec wrapper of the @PROFILE@ toolchain profile,
+# with the Rust toolchain of RUSTUP_DIR and the cargo linkers of the target and
+# the build machine.
 RUSTUP_HOME="@RUSTUP_DIR@/.rustup"
 CARGO_HOME="@RUSTUP_DIR@/.cargo"
 PATH="${CARGO_HOME}/bin:$PATH"

@@ -133,9 +133,9 @@ jobs:
         with:
           name: ${{ needs.sources.outputs.target }}-revisions
 
-      # The build cache key hashes the output of build-inputs.sh: when it
-      # changes, no build cache matches, and the build starts from scratch with
-      # ccache. The logs include it as build-inputs.txt.
+      # The build cache key holds the hash of the output of build-inputs.sh, so
+      # a changed output starts the build from scratch, with ccache. The logs
+      # include the output as build-inputs.txt.
       - name: Hash the build inputs
         id: build_inputs
         run: |

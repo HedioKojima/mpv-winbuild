@@ -1,6 +1,6 @@
-# Autoconf site defaults for the @PROFILE@ toolchain profile of mpv-winbuild,
-# read by configure scripts run through the exec wrapper. Arguments of a recipe
-# still take precedence.
+# Autoconf site defaults of the @PROFILE@ toolchain profile, read by the
+# configure scripts run through the exec wrapper. Arguments of a recipe take
+# precedence.
 
 # Absolute paths: llvm-windres finds its preprocessor next to the path it was
 # started from.

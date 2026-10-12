@@ -1,8 +1,7 @@
 #!/bin/bash
-# Moves the checkout of @name@ to its target commit, after aborting a git am
-# left unfinished. When the commit, the download or the recorded HEAD changed,
-# deletes the stamps so that the next build rebuilds it; otherwise
-# discards the changes in the checkout.
+# Aborts an unfinished git am and resets the checkout of @name@ to its target
+# commit. Deletes the stamps when the commit, the download or the recorded HEAD
+# changed.
 set -e
 [[ -e "@source_dir@/.git" ]] || exit 0
 git -C @source_dir@ am --abort 2> /dev/null || true

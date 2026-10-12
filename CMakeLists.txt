@@ -7,7 +7,7 @@ endif()
 
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 
-# Inputs, all passed by scripts/build.sh.
+# Inputs, passed by scripts/build.sh.
 set(LLVM_VERSION "" CACHE STRING "Major version of the apt.llvm.org toolchain")
 set(TARGET_TRIPLE "" CACHE STRING "Target triple, such as x86_64-w64-mingw32")
 set(PACKAGE_CPU_FLAGS "" CACHE STRING "clang CPU flags of the packages, such as -march=x86-64-v3 -mtune=generic")
@@ -18,7 +18,7 @@ set(MAKE_JOBS "" CACHE STRING "Parallel jobs of the make builds")
 set(SYSROOT_DIR "" CACHE PATH "Directory the runtimes and packages are installed into")
 set(SOURCES_DIR "" CACHE PATH "Directory holding the source checkouts, shared between build directories")
 set(RUSTUP_DIR "" CACHE PATH "Directory of the Rust toolchain, shared between build directories")
-set(CCACHE_DIR "" CACHE PATH "Directory of the ccache cache of the compiler wrappers")
+set(CCACHE_DIR "" CACHE PATH "ccache directory of the compiler wrappers")
 # Empty moves the git sources to the tips of their branches.
 set(SOURCE_REVISIONS_FILE "" CACHE FILEPATH "File of <source> <commit> lines that the git sources are moved to")
 

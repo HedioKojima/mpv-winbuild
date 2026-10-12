@@ -1,7 +1,5 @@
-# libc++, libc++abi and libunwind, static, on the Win32 thread API.
-#
-# Linking a program needs the libraries built here, so the configure checks link
-# without libunwind and libc++, as the runtimes build does for its own checks.
+# libc++, libc++abi and libunwind, static, on the Win32 thread API. The
+# configure checks link without libunwind and libc++, which are built here.
 ExternalProject_Add(libcxx
     DEPENDS
         compiler-rt

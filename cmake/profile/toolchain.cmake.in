@@ -1,4 +1,4 @@
-# CMake toolchain file for the @PROFILE@ toolchain profile of mpv-winbuild.
+# CMake toolchain file of the @PROFILE@ toolchain profile.
 
 set(CMAKE_SYSTEM_NAME Windows)
 set(CMAKE_SYSTEM_PROCESSOR @TARGET_PROCESSOR@)
@@ -7,8 +7,8 @@ set(CMAKE_C_COMPILER "@TOOLCHAIN_BIN_DIR@/@TARGET_TRIPLE@-clang")
 set(CMAKE_CXX_COMPILER "@TOOLCHAIN_BIN_DIR@/@TARGET_TRIPLE@-clang++")
 set(CMAKE_RC_COMPILER "@TOOLCHAIN_BIN_DIR@/@TARGET_TRIPLE@-windres")
 
-# Archivers for interprocedural optimization. llvm-ar reads LLVM bitcode
-# objects without a plugin.
+# Archivers for interprocedural optimization: llvm-ar reads bitcode objects
+# without a plugin.
 set(CMAKE_C_COMPILER_AR "@TOOLCHAIN_BIN_DIR@/@TARGET_TRIPLE@-ar")
 set(CMAKE_CXX_COMPILER_AR "@TOOLCHAIN_BIN_DIR@/@TARGET_TRIPLE@-ar")
 set(CMAKE_C_COMPILER_RANLIB "@TOOLCHAIN_BIN_DIR@/@TARGET_TRIPLE@-ranlib")

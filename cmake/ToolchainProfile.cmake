@@ -5,8 +5,7 @@
 #   build systems        CMake toolchain file, Meson cross and native files,
 #                        autoconf site file, command wrapper, cargo wrapper
 #   dependencies         pkg-config wrapper for static linking from the sysroot
-# Switches of a single package stay in its recipe. A setting here that only
-# reflects what no package needs otherwise says so.
+# Switches of a single package stay in its recipe.
 
 include_guard(GLOBAL)
 
@@ -30,12 +29,10 @@ file(CREATE_LINK "${installed_resource_dir}/include" "${CLANG_RESOURCE_DIR}/incl
 #
 #   EXEC               command prefix with the profile's tools first in PATH
 #                      and its autoconf site file
-#   CARGO_EXEC         EXEC with the Rust toolchain of RUSTUP_DIR in PATH and
-#                      the profile's cargo linkers; not among PROFILE_FILES, so
-#                      a recipe that uses it adds it to its patch step
+#   CARGO_EXEC         EXEC with the Rust toolchain of RUSTUP_DIR and the
+#                      profile's cargo linkers; not among PROFILE_FILES
 #   MAKE               make with MAKE_JOBS jobs, run through EXEC
-#   TOOLCHAIN_BIN_DIR  directory of the ${TARGET_TRIPLE}-* tools; llvm-windres
-#                      finds its preprocessor only when started by this path
+#   TOOLCHAIN_BIN_DIR  directory of the ${TARGET_TRIPLE}-* tools
 #   TOOLCHAIN_FILE     CMake toolchain file
 #   MESON_CROSS_FILE   Meson cross file
 #   MESON_NATIVE_FILE  Meson native file
@@ -79,9 +76,8 @@ function(add_toolchain_profile profile cpu_flags)
     set(MESON_CROSS_FILE "${profile_dir}/meson-cross.ini" PARENT_SCOPE)
     set(MESON_NATIVE_FILE "${profile_dir}/meson-native.ini" PARENT_SCOPE)
 
-    # configure_file() rewrites a file only when its content changes, so
-    # depending on these rebuilds the toolchain components and packages only
-    # after a real change.
+    # configure_file() rewrites a file only when its content changes, so only
+    # a changed file rebuilds what depends on it.
     set(PROFILE_FILES
         "${CLANG_CONFIG_FILE}"
         "${TOOLCHAIN_BIN_DIR}/${TARGET_TRIPLE}-clang"

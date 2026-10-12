@@ -1,7 +1,7 @@
-# mpv reads 7zip, ISO 9660, RAR, RAR5 and zip archives, alone or inside bzip2,
-# gzip and xz streams, without a passphrase, so only their decompressors,
-# including zstd for 7zip and zip entries, are enabled. Libraries in the sysroot
-# or in MinGW are switched explicitly.
+# Only what mpv reads is enabled: 7zip, ISO 9660, RAR, RAR5 and zip archives,
+# alone or inside bzip2, gzip and xz streams, without a passphrase, and zstd for
+# 7zip and zip entries. Libraries in the sysroot or in MinGW are switched
+# explicitly.
 ExternalProject_Add(libarchive
     DEPENDS
         bzip2

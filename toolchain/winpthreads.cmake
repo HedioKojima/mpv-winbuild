@@ -1,6 +1,6 @@
-# Packages use the Win32 thread API; only code that calls POSIX thread or clock
-# functions links members of this archive. Like the CRT, it is built without
-# section splitting and LTO.
+# Linked only by code that calls POSIX thread or clock functions: the packages
+# use the Win32 thread API. Built without LTO and section splitting, like the
+# CRT.
 ExternalProject_Add(winpthreads
     DEPENDS
         libcxx

@@ -1,6 +1,6 @@
-# Static libraries. mpv and libplacebo look for spirv-cross-c-shared, which
-# SPIRV-Cross installs only for its shared C library, so the install step writes
-# it for the static libraries.
+# mpv and libplacebo look for spirv-cross-c-shared.pc, which SPIRV-Cross
+# installs only with its shared C library, so the install step writes it for
+# the static libraries.
 ExternalProject_Add(spirv-cross
     GIT_REPOSITORY https://github.com/KhronosGroup/SPIRV-Cross.git
     GIT_TAG main

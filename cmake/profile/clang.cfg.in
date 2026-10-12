@@ -1,6 +1,5 @@
-# clang configuration for the @PROFILE@ toolchain profile of mpv-winbuild.
-# Options prefixed with $ are used only when linking and are placed after the
-# linker inputs.
+# clang configuration of the @PROFILE@ toolchain profile. Options prefixed with
+# $ apply only to links, after the linker inputs.
 
 --target=@TARGET_TRIPLE@
 --sysroot=@SYSROOT_DIR@

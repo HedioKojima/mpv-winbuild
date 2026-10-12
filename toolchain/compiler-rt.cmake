@@ -1,7 +1,7 @@
 # compiler-rt builtins, installed into the resource directory of the build
-# directory. Nothing links before the builtins exist, so the compiler checks
-# only compile. compiler-rt reads the CMake package of its LLVM, given as
-# LLVM_DIR, since the toolchain file confines package searches to the sysroot.
+# directory. The compiler checks only compile, as nothing links before the
+# builtins exist. LLVM_DIR names the CMake package of the installed LLVM, which
+# lies outside the sysroot that the toolchain file searches.
 ExternalProject_Add(compiler-rt
     DEPENDS
         llvm-project

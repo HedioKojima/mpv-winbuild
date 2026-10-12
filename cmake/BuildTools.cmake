@@ -22,8 +22,7 @@ set(LLVM_CMAKE_PACKAGE_DIR "${llvm_prefix}/lib/cmake/llvm")
 # Reconfigure when apt upgrades clang, which can move the runtimes commit.
 set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS "${clang_real_path}")
 
-# Compilers of the programs built and run on the build machine, such as code
-# generators and configure checks.
+# Compilers of the programs that run on the build machine.
 set(HOST_C_COMPILER "${LLVM_TOOLS_BINARY_DIR}/clang")
 set(HOST_CXX_COMPILER "${LLVM_TOOLS_BINARY_DIR}/clang++")
 
@@ -38,9 +37,9 @@ find_program(NASM_EXECUTABLE NAMES nasm REQUIRED)
 find_program(GLSLANG_EXECUTABLE NAMES glslang REQUIRED)
 find_program(CCACHE_EXECUTABLE NAMES ccache REQUIRED)
 
-# The runtimes are built at the commit of the installed clang, which the package
-# versions of the apt.llvm.org release suites record, for example
-# 1:23.1.3~++20260922084409+67f4a076a097-1~exp1~20260922084419.77.
+# The runtimes are built at the commit of the installed clang, which its
+# apt.llvm.org package version records:
+# 1:23.1.3~++20260922084409+67f4a076a097-1~exp1~20260922084419.77
 execute_process(
     COMMAND dpkg-query --show "--showformat=\${Version}" "clang-${LLVM_VERSION}"
     OUTPUT_VARIABLE clang_package_version

@@ -1,4 +1,4 @@
-# Meson cross file for the @PROFILE@ toolchain profile of mpv-winbuild.
+# Meson cross file of the @PROFILE@ toolchain profile.
 
 [binaries]
 c = '@TOOLCHAIN_BIN_DIR@/@TARGET_TRIPLE@-clang'

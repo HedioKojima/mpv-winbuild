@@ -1,23 +1,23 @@
-# Steps added to the external projects: the toolchain components and the
-# packages.
+# Steps added to the external projects: the toolchain components and packages.
 #
 # add_cleanup_steps(<name> <last step>)
-#   Adds the step targets <name>-delete-stamps (delete the stamps and, with a
-#   git source, reset the checkout), <name>-delete-build-stamps (delete the
-#   build and install stamps) and <name>-remove-prefix-and-source (delete the
-#   prefix directory, which holds the build directory and the stamps, and the
-#   source).
-#   An external project with a git source of its own also gets the step
-#   remove-build-after-install, which empties the build directory and resets
-#   the checkout after <last step>, and the step target <name>-remove-build
-#   (<name>-delete-stamps, then empty the build directory). The other external
-#   projects keep their build directory.
+#   Step targets:
+#     <name>-delete-stamps             delete the stamps and reset a git
+#                                      checkout
+#     <name>-delete-build-stamps       delete the build and install stamps
+#     <name>-remove-prefix-and-source  delete the prefix directory (build
+#                                      directory, stamps) and the source
+#   Only with a git source of its own:
+#     <name>-remove-build              <name>-delete-stamps, then empty the
+#                                      build directory
+#     step remove-build-after-install  after <last step>, empty the build
+#                                      directory and reset the checkout
 #
 # add_git_update_steps(<name>)
-#   Adds the step target <name>-force-update, which fetches the source, moves it
-#   to GIT_RESET, else to its commit in SOURCE_REVISIONS_FILE, else to its
-#   upstream branch, and deletes the stamps when the commit changes. A source
-#   that already exists is not cloned again.
+#   Step target <name>-force-update: fetch, move the checkout to GIT_RESET, else
+#   to its commit in SOURCE_REVISIONS_FILE, else to its upstream branch, and
+#   delete the stamps when the commit changed.
+#   Steps write-head, which records the commit, and mark-cloned.
 
 # The "<source> <commit>" lines of SOURCE_REVISIONS_FILE, as the revisions
 # target writes them.
@@ -133,10 +133,10 @@ function(add_git_update_steps name)
         LOG 1
     )
 
-    # Marks an existing checkout, which the build directories share, as cloned:
-    # the clone script clones again unless gitclone-lastrun.txt is newer than
-    # gitinfo.txt. The check runs at build time, because a step added only
-    # once the source exists would rerun the download after the first clone.
+    # Marks an existing checkout as cloned: the clone script clones again
+    # unless gitclone-lastrun.txt is newer than gitinfo.txt. Checked at build
+    # time, since a step added only when the source exists would rerun the
+    # download after the first clone.
     ExternalProject_Add_Step(${name} mark-cloned
         DEPENDERS download
         INDEPENDENT TRUE

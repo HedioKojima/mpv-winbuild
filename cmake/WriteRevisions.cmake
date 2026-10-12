@@ -1,8 +1,7 @@
 # cmake -D GIT_SOURCES=<file> -D OUTPUT=<file> -P WriteRevisions.cmake
 #
-# Reads the "<source> <source directory>" lines of GIT_SOURCES and writes a
-# "<source> <commit>" line for each, with the commit checked out in that
-# directory, to OUTPUT.
+# Writes to OUTPUT a "<source> <commit>" line, with the checked-out commit, for
+# each "<source> <source directory>" line of GIT_SOURCES.
 
 file(STRINGS "${GIT_SOURCES}" lines)
 set(revisions "")

@@ -1,7 +1,6 @@
-# ExternalProject of the running CMake with ExternalProject-git-options.patch,
-# which adds the GIT_CLONE_FLAGS, GIT_CLONE_POST_COMMAND and GIT_RESET options.
-# The module is copied again at every configure, so it always matches the
-# running CMake.
+# ExternalProject of the running CMake, copied at every configure, with
+# ExternalProject-git-options.patch, which adds the GIT_CLONE_FLAGS,
+# GIT_CLONE_POST_COMMAND and GIT_RESET options.
 
 set(modules_dir "${PROJECT_BINARY_DIR}/cmake/Modules")
 file(REMOVE_RECURSE "${modules_dir}")
