@@ -3,7 +3,7 @@
 #                        flags), ${TARGET_TRIPLE}-* compiler wrappers through
 #                        ccache, binutils links
 #   build systems        CMake toolchain file, Meson cross and native files,
-#                        autoconf site file, command wrapper
+#                        autoconf site file, command wrapper, cargo wrapper
 #   dependencies         pkg-config wrapper for static linking from the sysroot
 # Switches of a single package stay in its recipe. A setting here that only
 # reflects what no package needs otherwise says so.
@@ -30,6 +30,9 @@ file(CREATE_LINK "${clang_resource_dir}/include" "${CLANG_RESOURCE_DIR}/include"
 #
 #   EXEC            command prefix with the profile's tools first in PATH and
 #                   its autoconf site file
+#   CARGO_EXEC      EXEC with the Rust toolchain of RUSTUP_DIR in PATH and the
+#                   profile's cargo linkers; not among PROFILE_FILES, so a
+#                   recipe that uses it adds it to its patch step
 #   MAKE            make with MAKE_JOBS jobs, run through EXEC
 #   TOOLCHAIN_BIN_DIR  directory of the ${TARGET_TRIPLE}-* tools; llvm-windres
 #                   finds its preprocessor only when started by this path
@@ -44,6 +47,7 @@ function(add_toolchain_profile profile cpu_flags)
     set(BIN_DIR "${profile_dir}/bin")
     set(CLANG_CONFIG_FILE "${profile_dir}/${TARGET_TRIPLE}.cfg")
     set(CONFIG_SITE "${profile_dir}/config.site")
+    set(EXEC "${profile_dir}/exec")
     set(profile_template_dir "${CMAKE_CURRENT_FUNCTION_LIST_DIR}/profile")
 
     configure_file("${profile_template_dir}/clang.cfg.in" "${CLANG_CONFIG_FILE}" @ONLY)
@@ -59,14 +63,16 @@ function(add_toolchain_profile profile cpu_flags)
     endforeach()
 
     configure_file("${profile_template_dir}/pkg-config.sh.in" "${BIN_DIR}/${TARGET_TRIPLE}-pkg-config" @ONLY)
-    configure_file("${profile_template_dir}/exec.sh.in" "${profile_dir}/exec" @ONLY)
+    configure_file("${profile_template_dir}/exec.sh.in" "${EXEC}" @ONLY)
+    configure_file("${profile_template_dir}/cargo-exec.sh.in" "${profile_dir}/cargo-exec" @ONLY)
     configure_file("${profile_template_dir}/toolchain.cmake.in" "${profile_dir}/toolchain.cmake" @ONLY)
     configure_file("${profile_template_dir}/meson-cross.ini.in" "${profile_dir}/meson-cross.ini" @ONLY)
     configure_file("${profile_template_dir}/meson-native.ini.in" "${profile_dir}/meson-native.ini" @ONLY)
     configure_file("${profile_template_dir}/config.site.in" "${CONFIG_SITE}" @ONLY)
 
-    set(EXEC "${profile_dir}/exec" PARENT_SCOPE)
-    set(MAKE "${profile_dir}/exec" make "-j${MAKE_JOBS}" PARENT_SCOPE)
+    set(EXEC "${EXEC}" PARENT_SCOPE)
+    set(CARGO_EXEC "${profile_dir}/cargo-exec" PARENT_SCOPE)
+    set(MAKE "${EXEC}" make "-j${MAKE_JOBS}" PARENT_SCOPE)
     set(TOOLCHAIN_BIN_DIR "${BIN_DIR}" PARENT_SCOPE)
     set(TOOLCHAIN_FILE "${profile_dir}/toolchain.cmake" PARENT_SCOPE)
     set(MESON_CROSS "${profile_dir}/meson-cross.ini" PARENT_SCOPE)
@@ -79,7 +85,7 @@ function(add_toolchain_profile profile cpu_flags)
         "${BIN_DIR}/${TARGET_TRIPLE}-clang"
         "${BIN_DIR}/${TARGET_TRIPLE}-clang++"
         "${BIN_DIR}/${TARGET_TRIPLE}-pkg-config"
-        "${profile_dir}/exec"
+        "${EXEC}"
         "${profile_dir}/toolchain.cmake"
         "${profile_dir}/meson-cross.ini"
         "${profile_dir}/meson-native.ini"

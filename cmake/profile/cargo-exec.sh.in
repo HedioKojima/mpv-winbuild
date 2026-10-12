@@ -1,0 +1,14 @@
+#!/bin/sh
+# Runs a command through the exec wrapper of the @PROFILE@ toolchain profile
+# with the Rust toolchain of RUSTUP_DIR: its programs in PATH behind the
+# profile's tools, and the cargo linkers for the target and the build machine.
+RUSTUP_HOME="@RUSTUP_DIR@/.rustup"
+CARGO_HOME="@RUSTUP_DIR@/.cargo"
+PATH="${CARGO_HOME}/bin:$PATH"
+CARGO_TARGET_@RUST_TARGET_IDENTIFIER@_LINKER="@BIN_DIR@/@TARGET_TRIPLE@-clang++"
+CARGO_TARGET_@RUST_TARGET_IDENTIFIER@_AR="@BIN_DIR@/@TARGET_TRIPLE@-ar"
+CARGO_TARGET_@RUST_HOST_IDENTIFIER@_LINKER="@HOST_C_COMPILER@"
+export RUSTUP_HOME CARGO_HOME PATH
+export CARGO_TARGET_@RUST_TARGET_IDENTIFIER@_LINKER CARGO_TARGET_@RUST_TARGET_IDENTIFIER@_AR
+export CARGO_TARGET_@RUST_HOST_IDENTIFIER@_LINKER
+exec "@EXEC@" "$@"

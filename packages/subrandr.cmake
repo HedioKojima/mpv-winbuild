@@ -8,7 +8,7 @@ ExternalProject_Add(subrandr
     UPDATE_COMMAND ""
     SOURCE_DIR ${SOURCE_LOCATION}
     CONFIGURE_COMMAND ""
-    BUILD_COMMAND ${EXEC} ${CMAKE_COMMAND} -E env
+    BUILD_COMMAND ${CARGO_EXEC} ${CMAKE_COMMAND} -E env
         CARGO_NET_GIT_FETCH_WITH_CLI=true
         CARGO_PROFILE_RELEASE_CODEGEN_UNITS=1
         CARGO_PROFILE_RELEASE_LTO=thin
@@ -26,5 +26,6 @@ ExternalProject_Add(subrandr
     LOG_MERGED_STDOUTERR 1 LOG_OUTPUT_ON_FAILURE 1
 )
 
+ExternalProject_Add_StepDependencies(subrandr patch ${CARGO_EXEC})
 add_git_update_steps(subrandr)
 cleanup(subrandr install)
