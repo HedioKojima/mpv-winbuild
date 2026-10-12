@@ -1,9 +1,11 @@
 #!/bin/bash
-# Moves the checkout of @_name@ to its target commit. When the commit, the
-# download or the recorded HEAD changed, deletes the stamps so that the next
-# build rebuilds the project; otherwise discards the changes in the checkout.
+# Moves the checkout of @_name@ to its target commit, after aborting a git am
+# left unfinished. When the commit, the download or the recorded HEAD changed,
+# deletes the stamps so that the next build rebuilds the project; otherwise
+# discards the changes in the checkout.
 set -e
 [[ -e "@source_dir@/.git" ]] || exit 0
+git -C @source_dir@ am --abort 2> /dev/null || true
 upstream=$(git -C @source_dir@ rev-parse -q --verify @{u}) || upstream=$(git -C @source_dir@ rev-parse HEAD)
 target=$(git -C @source_dir@ rev-parse -q --verify @target@^{commit})
 if [[ ! -f "@stamp_dir@/@_name@-patch"  || "@stamp_dir@/@_name@-download" -nt "@stamp_dir@/@_name@-patch" || ! -f "@stamp_dir@/HEAD" || "$(cat @stamp_dir@/HEAD)" != "${target}" ]]; then

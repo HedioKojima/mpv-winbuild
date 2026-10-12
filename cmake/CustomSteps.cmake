@@ -36,9 +36,7 @@ function(cleanup _name _last_step)
         else()
             set(remove_command bash -c "find <BINARY_DIR> -mindepth 1 -delete && git -C <SOURCE_DIR> clean -df")
         endif()
-        set(reset_checkout_commands COMMAND bash -c "[ -e <SOURCE_DIR>/.git ] && git -C <SOURCE_DIR> am --abort 2> /dev/null || true"
-                                    COMMAND ${stamp_dir}/reset_head.sh
-                                    COMMAND bash -c "[ -e <SOURCE_DIR>/.git ] && git -C <SOURCE_DIR> restore . || true")
+        set(reset_checkout_commands COMMAND ${stamp_dir}/reset_head.sh)
     endif()
 
     # Step commands do not expand <STAMP_DIR>; <LOG_DIR> is the same directory.
@@ -116,7 +114,6 @@ function(add_git_update_steps _name)
         EXCLUDE_FROM_MAIN TRUE
         INDEPENDENT TRUE
         WORKING_DIRECTORY <SOURCE_DIR>
-        COMMAND bash -c "[ -e <SOURCE_DIR>/.git ] && git am --abort 2> /dev/null || true"
         COMMAND bash -c "[ -e <SOURCE_DIR>/.git ] && git fetch --filter=tree:0 --no-recurse-submodules || true"
         COMMAND ${stamp_dir}/reset_head.sh
     )
