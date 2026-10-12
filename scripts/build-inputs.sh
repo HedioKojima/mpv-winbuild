@@ -33,16 +33,16 @@ package_version() { dpkg-query --show --showformat='${Version}' "$1"; }
 
 # Each value is assigned first, so that a failing command stops the script.
 clang_version="$(package_version "clang-${llvm_version}")"
-nasm_version="$(package_version nasm)"
+cmake_version="$(cmake --version | awk 'NR == 1 { print $3 }')"
 glslang_version="$(package_version glslang-tools)"
-cmake_version="$(cmake --version | awk 'NR == 1')"
 meson_version="$(meson --version)"
+nasm_version="$(package_version nasm)"
 rust_channel=https://static.rust-lang.org/dist/channel-rust-stable.toml
-rust_version="$(curl -fsSL "${rust_channel}" | awk '
+rust_version="$(curl -fsSL "${rust_channel}" | awk -F '"' '
   /^\[pkg\.rust\]/ { found = 1 }
-  found && /^version = / { print; found = 0 }')"
+  found && /^version = / { print $2; found = 0 }')"
 mingw_trees=()
-for dir in mingw-w64-headers mingw-w64-crt mingw-w64-libraries/winpthreads; do
+for dir in mingw-w64-crt mingw-w64-headers mingw-w64-libraries/winpthreads; do
   mingw_trees+=("${dir} $(git -C "${mingw_source}" rev-parse "HEAD:${dir}")")
 done
 recipes_hash="$(cd "${repo_root}" \
@@ -50,13 +50,12 @@ recipes_hash="$(cd "${repo_root}" \
     -- CMakeLists.txt cmake toolchain packages \
   | xargs -0 sha256sum | sha256sum | cut -d ' ' -f 1)"
 
+# Build tools, Rust, mingw-w64 runtime trees, recipes.
 echo "clang ${clang_version}"
-echo "nasm ${nasm_version}"
-echo "glslang ${glslang_version}"
 echo "cmake ${cmake_version}"
+echo "glslang ${glslang_version}"
 echo "meson ${meson_version}"
+echo "nasm ${nasm_version}"
 echo "rust ${rust_version}"
-for tree in "${mingw_trees[@]}"; do
-  echo "mingw-w64 ${tree}"
-done
+printf '%s\n' "${mingw_trees[@]}"
 echo "recipes ${recipes_hash}"
