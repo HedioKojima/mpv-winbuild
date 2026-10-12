@@ -7,11 +7,11 @@ ExternalProject_Add(bzip2
     GIT_CLONE_FLAGS "--filter=tree:0"
     GIT_SUBMODULES ""
     UPDATE_COMMAND ""
-    SOURCE_DIR ${SOURCE_LOCATION}
+    SOURCE_DIR ${SOURCE_DIR}
     CONFIGURE_COMMAND ${MESON_EXECUTABLE} setup --reconfigure <BINARY_DIR> <SOURCE_DIR>
         --buildtype=release
-        --cross-file=${MESON_CROSS}
-        --native-file=${MESON_NATIVE}
+        --cross-file=${MESON_CROSS_FILE}
+        --native-file=${MESON_NATIVE_FILE}
         --default-library=static
         --prefix=${SYSROOT_DIR}
         --wrap-mode=nofallback
@@ -25,4 +25,4 @@ ExternalProject_Add(bzip2
 )
 
 add_git_update_steps(bzip2)
-cleanup(bzip2 install)
+add_cleanup_steps(bzip2 install)

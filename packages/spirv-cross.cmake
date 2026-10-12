@@ -12,7 +12,7 @@ ExternalProject_Add(spirv-cross
         !/shaders*
         !/tests-other/"
     UPDATE_COMMAND ""
-    SOURCE_DIR ${SOURCE_LOCATION}
+    SOURCE_DIR ${SOURCE_DIR}
     CMAKE_ARGS
         -DCMAKE_BUILD_TYPE=Release
         -DCMAKE_INSTALL_PREFIX=${SYSROOT_DIR}
@@ -30,4 +30,4 @@ ExternalProject_Add(spirv-cross
 )
 
 add_git_update_steps(spirv-cross)
-cleanup(spirv-cross install)
+add_cleanup_steps(spirv-cross install)

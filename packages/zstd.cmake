@@ -9,11 +9,11 @@ ExternalProject_Add(zstd
         !/examples/
         !/tests/"
     UPDATE_COMMAND ""
-    SOURCE_DIR ${SOURCE_LOCATION}
+    SOURCE_DIR ${SOURCE_DIR}
     CONFIGURE_COMMAND ${MESON_EXECUTABLE} setup --reconfigure <BINARY_DIR> <SOURCE_DIR>/build/meson
         --buildtype=release
-        --cross-file=${MESON_CROSS}
-        --native-file=${MESON_NATIVE}
+        --cross-file=${MESON_CROSS_FILE}
+        --native-file=${MESON_NATIVE_FILE}
         --default-library=static
         --prefix=${SYSROOT_DIR}
         --wrap-mode=nofallback
@@ -28,4 +28,4 @@ ExternalProject_Add(zstd
 )
 
 add_git_update_steps(zstd)
-cleanup(zstd install)
+add_cleanup_steps(zstd install)

@@ -10,7 +10,7 @@ ExternalProject_Add(xxhash
         !/tests/"
     UPDATE_COMMAND ""
     SOURCE_SUBDIR build/cmake
-    SOURCE_DIR ${SOURCE_LOCATION}
+    SOURCE_DIR ${SOURCE_DIR}
     CMAKE_ARGS
         -DCMAKE_BUILD_TYPE=Release
         -DCMAKE_INSTALL_PREFIX=${SYSROOT_DIR}
@@ -23,4 +23,4 @@ ExternalProject_Add(xxhash
 )
 
 add_git_update_steps(xxhash)
-cleanup(xxhash install)
+add_cleanup_steps(xxhash install)

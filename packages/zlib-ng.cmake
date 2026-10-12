@@ -7,7 +7,7 @@ ExternalProject_Add(zlib-ng
         !/doc/
         !/test/"
     UPDATE_COMMAND ""
-    SOURCE_DIR ${SOURCE_LOCATION}
+    SOURCE_DIR ${SOURCE_DIR}
     CMAKE_ARGS
         -DCMAKE_BUILD_TYPE=Release
         -DCMAKE_INSTALL_PREFIX=${SYSROOT_DIR}
@@ -21,4 +21,4 @@ ExternalProject_Add(zlib-ng
 )
 
 add_git_update_steps(zlib-ng)
-cleanup(zlib-ng install)
+add_cleanup_steps(zlib-ng install)

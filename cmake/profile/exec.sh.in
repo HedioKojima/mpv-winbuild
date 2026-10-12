@@ -1,7 +1,7 @@
 #!/bin/sh
 # Runs a command with the @PROFILE@ toolchain profile: its tools first in PATH
 # and its autoconf site file.
-PATH="@BIN_DIR@:$PATH"
+PATH="@TOOLCHAIN_BIN_DIR@:$PATH"
 CONFIG_SITE="@CONFIG_SITE@"
 export PATH CONFIG_SITE
 exec "$@"

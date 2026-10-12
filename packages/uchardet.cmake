@@ -5,7 +5,7 @@ ExternalProject_Add(uchardet
     GIT_TAG master
     GIT_CLONE_FLAGS "--filter=tree:0"
     UPDATE_COMMAND ""
-    SOURCE_DIR ${SOURCE_LOCATION}
+    SOURCE_DIR ${SOURCE_DIR}
     CMAKE_ARGS
         -DCMAKE_BUILD_TYPE=Release
         -DCMAKE_INSTALL_PREFIX=${SYSROOT_DIR}
@@ -19,4 +19,4 @@ ExternalProject_Add(uchardet
 )
 
 add_git_update_steps(uchardet)
-cleanup(uchardet install)
+add_cleanup_steps(uchardet install)

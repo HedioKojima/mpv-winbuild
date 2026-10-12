@@ -3,7 +3,7 @@ ExternalProject_Add(libunibreak
     GIT_TAG master
     GIT_CLONE_FLAGS "--filter=tree:0"
     UPDATE_COMMAND ""
-    SOURCE_DIR ${SOURCE_LOCATION}
+    SOURCE_DIR ${SOURCE_DIR}
     CONFIGURE_COMMAND ${EXEC} autoreconf -fi <SOURCE_DIR>
         COMMAND ${EXEC} <SOURCE_DIR>/configure
             --host=${TARGET_TRIPLE}
@@ -18,4 +18,4 @@ ExternalProject_Add(libunibreak
 )
 
 add_git_update_steps(libunibreak)
-cleanup(libunibreak install)
+add_cleanup_steps(libunibreak install)

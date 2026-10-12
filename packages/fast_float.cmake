@@ -3,7 +3,7 @@ ExternalProject_Add(fast_float
     GIT_TAG main
     GIT_CLONE_FLAGS "--filter=tree:0"
     UPDATE_COMMAND ""
-    SOURCE_DIR ${SOURCE_LOCATION}
+    SOURCE_DIR ${SOURCE_DIR}
     CMAKE_ARGS
         -DCMAKE_BUILD_TYPE=Release
         -DCMAKE_INSTALL_PREFIX=${SYSROOT_DIR}
@@ -13,4 +13,4 @@ ExternalProject_Add(fast_float
 )
 
 add_git_update_steps(fast_float)
-cleanup(fast_float install)
+add_cleanup_steps(fast_float install)

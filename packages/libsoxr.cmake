@@ -6,7 +6,7 @@ ExternalProject_Add(libsoxr
     GIT_TAG master
     GIT_CLONE_FLAGS "--filter=tree:0"
     UPDATE_COMMAND ""
-    SOURCE_DIR ${SOURCE_LOCATION}
+    SOURCE_DIR ${SOURCE_DIR}
     CMAKE_ARGS
         -DCMAKE_BUILD_TYPE=Release
         -DCMAKE_INSTALL_PREFIX=${SYSROOT_DIR}
@@ -24,4 +24,4 @@ ExternalProject_Add(libsoxr
 )
 
 add_git_update_steps(libsoxr)
-cleanup(libsoxr install)
+add_cleanup_steps(libsoxr install)

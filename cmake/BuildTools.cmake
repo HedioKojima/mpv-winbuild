@@ -16,22 +16,22 @@ endif()
 
 find_program(CLANG_EXECUTABLE NAMES "clang-${LLVM_VERSION}" REQUIRED)
 file(REAL_PATH "${CLANG_EXECUTABLE}" clang_real_path)
-cmake_path(GET clang_real_path PARENT_PATH LLVM_BINARY_DIR)
-cmake_path(GET LLVM_BINARY_DIR PARENT_PATH llvm_prefix)
+cmake_path(GET clang_real_path PARENT_PATH LLVM_TOOLS_BINARY_DIR)
+cmake_path(GET LLVM_TOOLS_BINARY_DIR PARENT_PATH llvm_prefix)
 set(LLVM_CMAKE_PACKAGE_DIR "${llvm_prefix}/lib/cmake/llvm")
 # Reconfigure when apt upgrades clang, which can move the runtimes commit.
 set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS "${clang_real_path}")
 
 # Compilers of the programs built and run on the build machine, such as code
 # generators and configure checks.
-set(HOST_C_COMPILER "${LLVM_BINARY_DIR}/clang")
-set(HOST_CXX_COMPILER "${LLVM_BINARY_DIR}/clang++")
+set(HOST_C_COMPILER "${LLVM_TOOLS_BINARY_DIR}/clang")
+set(HOST_CXX_COMPILER "${LLVM_TOOLS_BINARY_DIR}/clang++")
 
 # The LLVM tools used as binutils, found as LLVM_<TOOL>.
 set(LLVM_BINUTILS ar dlltool nm objcopy objdump ranlib strip windres)
 foreach(tool IN LISTS LLVM_BINUTILS)
     string(TOUPPER "LLVM_${tool}" variable)
-    find_program("${variable}" NAMES "llvm-${tool}" HINTS "${LLVM_BINARY_DIR}" NO_DEFAULT_PATH REQUIRED)
+    find_program("${variable}" NAMES "llvm-${tool}" HINTS "${LLVM_TOOLS_BINARY_DIR}" NO_DEFAULT_PATH REQUIRED)
 endforeach()
 find_program(PKGCONF_EXECUTABLE NAMES pkgconf REQUIRED)
 find_program(NASM_EXECUTABLE NAMES nasm REQUIRED)

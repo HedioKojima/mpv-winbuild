@@ -9,7 +9,7 @@ ExternalProject_Add(ngtcp2
         !/tests/"
     GIT_SUBMODULES ""
     UPDATE_COMMAND ""
-    SOURCE_DIR ${SOURCE_LOCATION}
+    SOURCE_DIR ${SOURCE_DIR}
     CMAKE_ARGS
         -DCMAKE_BUILD_TYPE=Release
         -DCMAKE_INSTALL_PREFIX=${SYSROOT_DIR}
@@ -24,4 +24,4 @@ ExternalProject_Add(ngtcp2
 )
 
 add_git_update_steps(ngtcp2)
-cleanup(ngtcp2 install)
+add_cleanup_steps(ngtcp2 install)

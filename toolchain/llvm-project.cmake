@@ -30,7 +30,7 @@ ExternalProject_Add(llvm-project
         /llvm/cmake/"
     GIT_RESET ${LLVM_RUNTIMES_COMMIT}
     UPDATE_COMMAND ""
-    SOURCE_DIR ${SOURCE_LOCATION}
+    SOURCE_DIR ${SOURCE_DIR}
     CONFIGURE_COMMAND ""
     BUILD_COMMAND ""
     INSTALL_COMMAND ""
@@ -39,6 +39,6 @@ ExternalProject_Add(llvm-project
 )
 
 add_git_update_steps(llvm-project)
-cleanup(llvm-project install)
+add_cleanup_steps(llvm-project install)
 
-set(LLVM_SOURCE_DIR ${SOURCE_LOCATION})
+set(LLVM_SOURCE_DIR ${SOURCE_DIR})

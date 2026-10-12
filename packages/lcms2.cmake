@@ -8,11 +8,11 @@ ExternalProject_Add(lcms2
         !/fuzzers/
         !/testbed/"
     UPDATE_COMMAND ""
-    SOURCE_DIR ${SOURCE_LOCATION}
+    SOURCE_DIR ${SOURCE_DIR}
     CONFIGURE_COMMAND ${MESON_EXECUTABLE} setup --reconfigure <BINARY_DIR> <SOURCE_DIR>
         --buildtype=release
-        --cross-file=${MESON_CROSS}
-        --native-file=${MESON_NATIVE}
+        --cross-file=${MESON_CROSS_FILE}
+        --native-file=${MESON_NATIVE_FILE}
         --default-library=static
         --prefix=${SYSROOT_DIR}
         --wrap-mode=nofallback
@@ -27,4 +27,4 @@ ExternalProject_Add(lcms2
 )
 
 add_git_update_steps(lcms2)
-cleanup(lcms2 install)
+add_cleanup_steps(lcms2 install)

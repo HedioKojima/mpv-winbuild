@@ -12,7 +12,7 @@ ExternalProject_Add(libjxl
         !/examples/"
     GIT_SUBMODULES ""
     UPDATE_COMMAND ""
-    SOURCE_DIR ${SOURCE_LOCATION}
+    SOURCE_DIR ${SOURCE_DIR}
     CMAKE_ARGS
         -DCMAKE_BUILD_TYPE=Release
         -DCMAKE_INSTALL_PREFIX=${SYSROOT_DIR}
@@ -37,4 +37,4 @@ ExternalProject_Add(libjxl
 )
 
 add_git_update_steps(libjxl)
-cleanup(libjxl install)
+add_cleanup_steps(libjxl install)

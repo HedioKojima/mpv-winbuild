@@ -6,7 +6,7 @@ ExternalProject_Add(libzimg
     GIT_SUBMODULES
         graphengine
     UPDATE_COMMAND ""
-    SOURCE_DIR ${SOURCE_LOCATION}
+    SOURCE_DIR ${SOURCE_DIR}
     CONFIGURE_COMMAND ${EXEC} autoreconf -fi <SOURCE_DIR>
         COMMAND ${EXEC} <SOURCE_DIR>/configure
             --host=${TARGET_TRIPLE}
@@ -20,4 +20,4 @@ ExternalProject_Add(libzimg
 )
 
 add_git_update_steps(libzimg)
-cleanup(libzimg install)
+add_cleanup_steps(libzimg install)

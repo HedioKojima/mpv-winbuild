@@ -6,7 +6,7 @@ ExternalProject_Add(libiconv
         https://mirrors.kernel.org/gnu/libiconv/libiconv-${LIBICONV_VERSION}.tar.gz
     URL_HASH SHA256=88dd96a8c0464eca144fc791ae60cd31cd8ee78321e67397e25fc095c4a19aa6
     DOWNLOAD_DIR ${SOURCES_DIR}
-    SOURCE_DIR ${SOURCE_LOCATION}
+    SOURCE_DIR ${SOURCE_DIR}
     CONFIGURE_COMMAND ${EXEC} <SOURCE_DIR>/configure
         --host=${TARGET_TRIPLE}
         --prefix=${SYSROOT_DIR}
@@ -20,4 +20,4 @@ ExternalProject_Add(libiconv
     LOG_MERGED_STDOUTERR 1 LOG_OUTPUT_ON_FAILURE 1
 )
 
-cleanup(libiconv install)
+add_cleanup_steps(libiconv install)

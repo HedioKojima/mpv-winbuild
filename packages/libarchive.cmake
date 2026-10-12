@@ -19,7 +19,7 @@ ExternalProject_Add(libarchive
         !/examples/
         !/test_utils/"
     UPDATE_COMMAND ""
-    SOURCE_DIR ${SOURCE_LOCATION}
+    SOURCE_DIR ${SOURCE_DIR}
     CMAKE_ARGS
         -DCMAKE_BUILD_TYPE=Release
         -DCMAKE_INSTALL_PREFIX=${SYSROOT_DIR}
@@ -45,4 +45,4 @@ ExternalProject_Add(libarchive
 )
 
 add_git_update_steps(libarchive)
-cleanup(libarchive install)
+add_cleanup_steps(libarchive install)

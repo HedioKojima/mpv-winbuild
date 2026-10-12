@@ -30,7 +30,7 @@ ExternalProject_Add(ffmpeg
         /*
         !/tests/ref/fate/"
     UPDATE_COMMAND ""
-    SOURCE_DIR ${SOURCE_LOCATION}
+    SOURCE_DIR ${SOURCE_DIR}
     CONFIGURE_COMMAND ${EXEC} <SOURCE_DIR>/configure
         --cross-prefix=${TARGET_TRIPLE}-
         --cc=${TARGET_TRIPLE}-clang
@@ -97,4 +97,4 @@ ExternalProject_Add(ffmpeg
 )
 
 add_git_update_steps(ffmpeg)
-cleanup(ffmpeg install)
+add_cleanup_steps(ffmpeg install)

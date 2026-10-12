@@ -12,7 +12,7 @@ ExternalProject_Add(xz
         !/po4a/
         !/windows/"
     UPDATE_COMMAND ""
-    SOURCE_DIR ${SOURCE_LOCATION}
+    SOURCE_DIR ${SOURCE_DIR}
     CONFIGURE_COMMAND ${EXEC} autoreconf -fi <SOURCE_DIR>
         COMMAND ${EXEC} <SOURCE_DIR>/configure
             --host=${TARGET_TRIPLE}
@@ -35,4 +35,4 @@ ExternalProject_Add(xz
 )
 
 add_git_update_steps(xz)
-cleanup(xz install)
+add_cleanup_steps(xz install)

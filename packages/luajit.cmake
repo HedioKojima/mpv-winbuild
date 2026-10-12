@@ -23,7 +23,7 @@ ExternalProject_Add(luajit
         /*
         !/doc/"
     UPDATE_COMMAND ""
-    SOURCE_DIR ${SOURCE_LOCATION}
+    SOURCE_DIR ${SOURCE_DIR}
     CONFIGURE_COMMAND ""
     BUILD_COMMAND ${MAKE} -C <SOURCE_DIR>/src ${luajit_make_variables} amalg
     BUILD_IN_SOURCE 1
@@ -34,4 +34,4 @@ ExternalProject_Add(luajit
 )
 
 add_git_update_steps(luajit)
-cleanup(luajit install)
+add_cleanup_steps(luajit install)

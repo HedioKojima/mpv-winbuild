@@ -9,7 +9,7 @@ ExternalProject_Add(spirv-tools
         !/docs/
         !/kokoro/"
     UPDATE_COMMAND ""
-    SOURCE_DIR ${SOURCE_LOCATION}
+    SOURCE_DIR ${SOURCE_DIR}
     CONFIGURE_COMMAND ""
     BUILD_COMMAND ""
     INSTALL_COMMAND ""
@@ -18,6 +18,6 @@ ExternalProject_Add(spirv-tools
 )
 
 add_git_update_steps(spirv-tools)
-cleanup(spirv-tools install)
+add_cleanup_steps(spirv-tools install)
 
-set(SPIRV_TOOLS_SOURCE_DIR ${SOURCE_LOCATION})
+set(SPIRV_TOOLS_SOURCE_DIR ${SOURCE_DIR})

@@ -17,7 +17,7 @@ ExternalProject_Add(openssl
         !/test/"
     GIT_SUBMODULES ""
     UPDATE_COMMAND ""
-    SOURCE_DIR ${SOURCE_LOCATION}
+    SOURCE_DIR ${SOURCE_DIR}
     CONFIGURE_COMMAND ${EXEC} <SOURCE_DIR>/Configure
         --cross-compile-prefix=${TARGET_TRIPLE}-
         --prefix=${SYSROOT_DIR}
@@ -97,4 +97,4 @@ ExternalProject_Add(openssl
 )
 
 add_git_update_steps(openssl)
-cleanup(openssl install)
+add_cleanup_steps(openssl install)

@@ -7,7 +7,7 @@ ExternalProject_Add(glslang
         /*
         !/Test/"
     UPDATE_COMMAND ""
-    SOURCE_DIR ${SOURCE_LOCATION}
+    SOURCE_DIR ${SOURCE_DIR}
     CONFIGURE_COMMAND ""
     BUILD_COMMAND ""
     INSTALL_COMMAND ""
@@ -16,6 +16,6 @@ ExternalProject_Add(glslang
 )
 
 add_git_update_steps(glslang)
-cleanup(glslang install)
+add_cleanup_steps(glslang install)
 
-set(GLSLANG_SOURCE_DIR ${SOURCE_LOCATION})
+set(GLSLANG_SOURCE_DIR ${SOURCE_DIR})

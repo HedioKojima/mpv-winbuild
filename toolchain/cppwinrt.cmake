@@ -11,7 +11,7 @@ ExternalProject_Add(cppwinrt
         !/docs
         !/test"
     UPDATE_COMMAND ""
-    SOURCE_DIR ${SOURCE_LOCATION}
+    SOURCE_DIR ${SOURCE_DIR}
     CMAKE_ARGS
         -DCMAKE_BUILD_TYPE=Release
         -DCMAKE_CXX_COMPILER=${HOST_CXX_COMPILER}
@@ -23,4 +23,4 @@ ExternalProject_Add(cppwinrt
 )
 
 add_git_update_steps(cppwinrt)
-cleanup(cppwinrt install)
+add_cleanup_steps(cppwinrt install)

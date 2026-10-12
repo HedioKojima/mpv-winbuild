@@ -8,7 +8,7 @@ ExternalProject_Add(libjpeg-turbo
         !/test/
         !/testimages/"
     UPDATE_COMMAND ""
-    SOURCE_DIR ${SOURCE_LOCATION}
+    SOURCE_DIR ${SOURCE_DIR}
     CMAKE_ARGS
         -DCMAKE_BUILD_TYPE=Release
         -DCMAKE_INSTALL_PREFIX=${SYSROOT_DIR}
@@ -25,4 +25,4 @@ ExternalProject_Add(libjpeg-turbo
 )
 
 add_git_update_steps(libjpeg-turbo)
-cleanup(libjpeg-turbo install)
+add_cleanup_steps(libjpeg-turbo install)

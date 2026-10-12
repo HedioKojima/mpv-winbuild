@@ -10,4 +10,4 @@ ExternalProject_Add(rustup
 )
 
 ExternalProject_Add_StepDependencies(rustup patch ${CARGO_EXEC})
-cleanup(rustup install)
+add_cleanup_steps(rustup install)

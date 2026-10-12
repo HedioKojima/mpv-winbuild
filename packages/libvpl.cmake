@@ -10,7 +10,7 @@ ExternalProject_Add(libvpl
     UPDATE_COMMAND ""
     PATCH_COMMAND git -C <SOURCE_DIR> restore .
         COMMAND git -C <SOURCE_DIR> apply ${CMAKE_CURRENT_LIST_DIR}/libvpl-avoid-wcscpy_s-defines-on-mingw.patch
-    SOURCE_DIR ${SOURCE_LOCATION}
+    SOURCE_DIR ${SOURCE_DIR}
     CMAKE_ARGS
         -DCMAKE_BUILD_TYPE=Release
         -DCMAKE_INSTALL_PREFIX=${SYSROOT_DIR}
@@ -24,4 +24,4 @@ ExternalProject_Add(libvpl
 )
 
 add_git_update_steps(libvpl)
-cleanup(libvpl install)
+add_cleanup_steps(libvpl install)

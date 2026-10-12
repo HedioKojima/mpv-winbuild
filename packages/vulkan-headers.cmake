@@ -3,7 +3,7 @@ ExternalProject_Add(vulkan-headers
     GIT_TAG main
     GIT_CLONE_FLAGS "--filter=tree:0"
     UPDATE_COMMAND ""
-    SOURCE_DIR ${SOURCE_LOCATION}
+    SOURCE_DIR ${SOURCE_DIR}
     CMAKE_ARGS
         -DCMAKE_BUILD_TYPE=Release
         -DCMAKE_INSTALL_PREFIX=${SYSROOT_DIR}
@@ -14,4 +14,4 @@ ExternalProject_Add(vulkan-headers
 )
 
 add_git_update_steps(vulkan-headers)
-cleanup(vulkan-headers install)
+add_cleanup_steps(vulkan-headers install)

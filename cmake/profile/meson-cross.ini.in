@@ -1,13 +1,13 @@
 # Meson cross file for the @PROFILE@ toolchain profile of mpv-winbuild.
 
 [binaries]
-c = '@BIN_DIR@/@TARGET_TRIPLE@-clang'
-cpp = '@BIN_DIR@/@TARGET_TRIPLE@-clang++'
-ar = '@BIN_DIR@/@TARGET_TRIPLE@-ar'
-strip = '@BIN_DIR@/@TARGET_TRIPLE@-strip'
-windres = '@BIN_DIR@/@TARGET_TRIPLE@-windres'
-dlltool = '@BIN_DIR@/@TARGET_TRIPLE@-dlltool'
-pkg-config = '@BIN_DIR@/@TARGET_TRIPLE@-pkg-config'
+c = '@TOOLCHAIN_BIN_DIR@/@TARGET_TRIPLE@-clang'
+cpp = '@TOOLCHAIN_BIN_DIR@/@TARGET_TRIPLE@-clang++'
+ar = '@TOOLCHAIN_BIN_DIR@/@TARGET_TRIPLE@-ar'
+strip = '@TOOLCHAIN_BIN_DIR@/@TARGET_TRIPLE@-strip'
+windres = '@TOOLCHAIN_BIN_DIR@/@TARGET_TRIPLE@-windres'
+dlltool = '@TOOLCHAIN_BIN_DIR@/@TARGET_TRIPLE@-dlltool'
+pkg-config = '@TOOLCHAIN_BIN_DIR@/@TARGET_TRIPLE@-pkg-config'
 nasm = '@NASM_EXECUTABLE@'
 
 [host_machine]

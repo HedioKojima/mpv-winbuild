@@ -9,11 +9,11 @@ ExternalProject_Add(libass
     GIT_TAG master
     GIT_CLONE_FLAGS "--filter=tree:0"
     UPDATE_COMMAND ""
-    SOURCE_DIR ${SOURCE_LOCATION}
+    SOURCE_DIR ${SOURCE_DIR}
     CONFIGURE_COMMAND ${MESON_EXECUTABLE} setup --reconfigure <BINARY_DIR> <SOURCE_DIR>
         --buildtype=release
-        --cross-file=${MESON_CROSS}
-        --native-file=${MESON_NATIVE}
+        --cross-file=${MESON_CROSS_FILE}
+        --native-file=${MESON_NATIVE_FILE}
         --default-library=static
         --prefix=${SYSROOT_DIR}
         --wrap-mode=nofallback
@@ -31,4 +31,4 @@ ExternalProject_Add(libass
 )
 
 add_git_update_steps(libass)
-cleanup(libass install)
+add_cleanup_steps(libass install)

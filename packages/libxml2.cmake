@@ -13,7 +13,7 @@ ExternalProject_Add(libxml2
         !/result/
         !/test/"
     UPDATE_COMMAND ""
-    SOURCE_DIR ${SOURCE_LOCATION}
+    SOURCE_DIR ${SOURCE_DIR}
     CMAKE_ARGS
         -DCMAKE_BUILD_TYPE=Release
         -DCMAKE_INSTALL_PREFIX=${SYSROOT_DIR}
@@ -38,4 +38,4 @@ ExternalProject_Add(libxml2
 )
 
 add_git_update_steps(libxml2)
-cleanup(libxml2 install)
+add_cleanup_steps(libxml2 install)

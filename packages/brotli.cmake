@@ -9,7 +9,7 @@ ExternalProject_Add(brotli
         !/research/
         !/tests/"
     UPDATE_COMMAND ""
-    SOURCE_DIR ${SOURCE_LOCATION}
+    SOURCE_DIR ${SOURCE_DIR}
     CMAKE_ARGS
         -DCMAKE_BUILD_TYPE=Release
         -DCMAKE_INSTALL_PREFIX=${SYSROOT_DIR}
@@ -22,4 +22,4 @@ ExternalProject_Add(brotli
 )
 
 add_git_update_steps(brotli)
-cleanup(brotli install)
+add_cleanup_steps(brotli install)

@@ -8,7 +8,7 @@ ExternalProject_Add(windows-rs
     GIT_CLONE_POST_COMMAND "sparse-checkout set --no-cone
         /${WINDOWS_WINMD}"
     UPDATE_COMMAND ""
-    SOURCE_DIR ${SOURCE_LOCATION}
+    SOURCE_DIR ${SOURCE_DIR}
     CONFIGURE_COMMAND ""
     BUILD_COMMAND ""
     INSTALL_COMMAND ""
@@ -17,6 +17,6 @@ ExternalProject_Add(windows-rs
 )
 
 add_git_update_steps(windows-rs)
-cleanup(windows-rs install)
+add_cleanup_steps(windows-rs install)
 
-set(WINDOWS_RS_SOURCE_DIR ${SOURCE_LOCATION})
+set(WINDOWS_RS_SOURCE_DIR ${SOURCE_DIR})

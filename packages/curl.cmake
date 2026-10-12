@@ -17,7 +17,7 @@ ExternalProject_Add(curl
         !/docs/
         !/tests/"
     UPDATE_COMMAND ""
-    SOURCE_DIR ${SOURCE_LOCATION}
+    SOURCE_DIR ${SOURCE_DIR}
     CMAKE_ARGS
         -DCMAKE_BUILD_TYPE=Release
         -DCMAKE_DISABLE_FIND_PACKAGE_Perl=ON
@@ -77,4 +77,4 @@ ExternalProject_Add(curl
 )
 
 add_git_update_steps(curl)
-cleanup(curl install)
+add_cleanup_steps(curl install)

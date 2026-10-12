@@ -5,7 +5,7 @@ ExternalProject_Add(amf-headers
     GIT_CLONE_POST_COMMAND "sparse-checkout set --no-cone
         /amf/public/include/"
     UPDATE_COMMAND ""
-    SOURCE_DIR ${SOURCE_LOCATION}
+    SOURCE_DIR ${SOURCE_DIR}
     CONFIGURE_COMMAND ""
     BUILD_COMMAND ""
     INSTALL_COMMAND ${CMAKE_COMMAND} -E copy_directory <SOURCE_DIR>/amf/public/include/components ${SYSROOT_DIR}/include/AMF/components
@@ -15,4 +15,4 @@ ExternalProject_Add(amf-headers
 )
 
 add_git_update_steps(amf-headers)
-cleanup(amf-headers install)
+add_cleanup_steps(amf-headers install)

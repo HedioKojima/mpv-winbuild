@@ -9,7 +9,7 @@ ExternalProject_Add(vulkan-loader
         !/docs/
         !/tests/"
     UPDATE_COMMAND ""
-    SOURCE_DIR ${SOURCE_LOCATION}
+    SOURCE_DIR ${SOURCE_DIR}
     CMAKE_ARGS
         -DCMAKE_BUILD_TYPE=Release
         -DCMAKE_INSTALL_PREFIX=${SYSROOT_DIR}
@@ -21,4 +21,4 @@ ExternalProject_Add(vulkan-loader
 )
 
 add_git_update_steps(vulkan-loader)
-cleanup(vulkan-loader install)
+add_cleanup_steps(vulkan-loader install)

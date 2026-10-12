@@ -8,7 +8,7 @@ ExternalProject_Add(nghttp3
     GIT_SUBMODULES
         lib/sfparse
     UPDATE_COMMAND ""
-    SOURCE_DIR ${SOURCE_LOCATION}
+    SOURCE_DIR ${SOURCE_DIR}
     CMAKE_ARGS
         -DCMAKE_BUILD_TYPE=Release
         -DCMAKE_INSTALL_PREFIX=${SYSROOT_DIR}
@@ -22,4 +22,4 @@ ExternalProject_Add(nghttp3
 )
 
 add_git_update_steps(nghttp3)
-cleanup(nghttp3 install)
+add_cleanup_steps(nghttp3 install)

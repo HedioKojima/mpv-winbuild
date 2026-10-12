@@ -4,7 +4,7 @@ ExternalProject_Add(spirv-headers
     GIT_TAG main
     GIT_CLONE_FLAGS "--filter=tree:0"
     UPDATE_COMMAND ""
-    SOURCE_DIR ${SOURCE_LOCATION}
+    SOURCE_DIR ${SOURCE_DIR}
     CMAKE_ARGS
         -DCMAKE_BUILD_TYPE=Release
         -DCMAKE_INSTALL_PREFIX=${SYSROOT_DIR}
@@ -15,6 +15,6 @@ ExternalProject_Add(spirv-headers
 )
 
 add_git_update_steps(spirv-headers)
-cleanup(spirv-headers install)
+add_cleanup_steps(spirv-headers install)
 
-set(SPIRV_HEADERS_SOURCE_DIR ${SOURCE_LOCATION})
+set(SPIRV_HEADERS_SOURCE_DIR ${SOURCE_DIR})

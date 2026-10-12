@@ -4,7 +4,7 @@ ExternalProject_Add(nghttp2
     GIT_CLONE_FLAGS "--filter=tree:0"
     GIT_SUBMODULES ""
     UPDATE_COMMAND ""
-    SOURCE_DIR ${SOURCE_LOCATION}
+    SOURCE_DIR ${SOURCE_DIR}
     CMAKE_ARGS
         -DCMAKE_BUILD_TYPE=Release
         -DCMAKE_INSTALL_PREFIX=${SYSROOT_DIR}
@@ -20,4 +20,4 @@ ExternalProject_Add(nghttp2
 )
 
 add_git_update_steps(nghttp2)
-cleanup(nghttp2 install)
+add_cleanup_steps(nghttp2 install)

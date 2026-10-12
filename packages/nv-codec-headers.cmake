@@ -3,7 +3,7 @@ ExternalProject_Add(nv-codec-headers
     GIT_TAG master
     GIT_CLONE_FLAGS "--filter=tree:0"
     UPDATE_COMMAND ""
-    SOURCE_DIR ${SOURCE_LOCATION}
+    SOURCE_DIR ${SOURCE_DIR}
     CONFIGURE_COMMAND ""
     BUILD_COMMAND ""
     INSTALL_COMMAND ${MAKE} -C <SOURCE_DIR> PREFIX=${SYSROOT_DIR} install
@@ -12,4 +12,4 @@ ExternalProject_Add(nv-codec-headers
 )
 
 add_git_update_steps(nv-codec-headers)
-cleanup(nv-codec-headers install)
+add_cleanup_steps(nv-codec-headers install)

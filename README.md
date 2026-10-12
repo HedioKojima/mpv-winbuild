@@ -19,7 +19,7 @@ Autobuild runs daily at UTC 00:00.
 The scripts run on Ubuntu 26.04, natively or on WSL2. Defaults such as the CPU
 and the LLVM version are in `scripts/defaults.env`. Every script prints its
 options with `--help`. All but `install-dependencies.sh` take an optional
-trailing `buildroot`, the directory that holds `sources/`, `build/`, `ccache/`,
+trailing `workdir`, the directory that holds `sources/`, `build/`, `ccache/`,
 `rustup/` and `release/` (default: the repository root).
 
 | Script | Purpose |
@@ -29,7 +29,7 @@ trailing `buildroot`, the directory that holds `sources/`, `build/`, `ccache/`,
 | `build-inputs.sh` | Print the inputs that the stamps do not track: the versions of the build tools and Rust, the mingw-w64 runtime trees and a hash of the recipes. |
 | `package.sh` | Pack `mpv.exe`, `mpv.com` and `ffmpeg.exe` of a build into `release/*.7z`. |
 | `update.sh` | Move the git sources to the tips of their branches, or to the commits of the `--revisions` file of the last build. |
-| `clean.sh` | Delete the build directories, stamps and sources of the git packages given with `--package`, or of all of them, so that the next build clones and builds them again. |
+| `clean.sh` | Delete the build directories, stamps and sources of the packages given with `--package` and the toolchain components given with `--toolchain`, or of every git source, so that the next build clones and builds them again. |
 
 ```bash
 scripts/install-dependencies.sh

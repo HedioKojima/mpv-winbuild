@@ -6,7 +6,7 @@ ExternalProject_Add(subrandr
     GIT_TAG master
     GIT_CLONE_FLAGS "--filter=tree:0"
     UPDATE_COMMAND ""
-    SOURCE_DIR ${SOURCE_LOCATION}
+    SOURCE_DIR ${SOURCE_DIR}
     CONFIGURE_COMMAND ""
     BUILD_COMMAND ${CARGO_EXEC} ${CMAKE_COMMAND} -E env
         CARGO_NET_GIT_FETCH_WITH_CLI=true
@@ -14,7 +14,7 @@ ExternalProject_Add(subrandr
         CARGO_PROFILE_RELEASE_LTO=thin
         CARGO_PROFILE_RELEASE_PANIC=abort
         CARGO_PROFILE_RELEASE_STRIP=true
-        "CARGO_TARGET_${RUST_TARGET_IDENTIFIER}_RUSTFLAGS=${PACKAGE_RUST_FLAGS} -Clinker-plugin-lto"
+        "CARGO_TARGET_${RUST_TARGET_IDENTIFIER}_RUSTFLAGS=${PACKAGE_RUST_CPU_FLAGS} -Clinker-plugin-lto"
         cargo xtask install
         --prefix ${SYSROOT_DIR}
         --target ${RUST_TARGET}
@@ -28,4 +28,4 @@ ExternalProject_Add(subrandr
 
 ExternalProject_Add_StepDependencies(subrandr patch ${CARGO_EXEC})
 add_git_update_steps(subrandr)
-cleanup(subrandr install)
+add_cleanup_steps(subrandr install)
