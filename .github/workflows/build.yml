@@ -101,6 +101,9 @@ jobs:
             mtune: generic
           - march: znver3
             mtune: znver3
+          - march: znver3_cropdetect-vk
+            mtune: znver3
+            ref: cropdetect-vk
     env:
       GH_TOKEN: ${{ github.token }}
       BUILD_DIR: build/${{ matrix.march }}
@@ -109,6 +112,8 @@ jobs:
       clang_version: ${{ steps.clang.outputs.version }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ matrix.ref }}
 
       - name: Install dependencies
         run: |
