@@ -3,7 +3,7 @@
 # directory do not track. build.sh starts from an empty build directory when
 # they change, and the workflow puts their hash in its build cache key.
 #
-# Usage: cache-key.sh [--llvm-version <major>] [buildroot]
+# Usage: build-inputs.sh [--llvm-version <major>] [buildroot]
 #   --llvm-version <major>  apt.llvm.org major version (default: LLVM_VERSION of
 #                           defaults.env)
 #   buildroot               location of the sources/ directory (default: the

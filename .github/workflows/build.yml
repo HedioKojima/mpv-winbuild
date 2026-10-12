@@ -133,14 +133,14 @@ jobs:
         with:
           name: ${{ needs.sources.outputs.target }}-revisions
 
-      # The build cache key hashes the output of cache-key.sh: when it changes,
-      # no build cache matches, and the build starts from scratch with ccache.
-      # The logs include it as cache-key.txt.
+      # The build cache key hashes the output of build-inputs.sh: when it
+      # changes, no build cache matches, and the build starts from scratch with
+      # ccache. The logs include it as build-inputs.txt.
       - name: Hash the build inputs
-        id: cache_key
+        id: build_inputs
         run: |
-          scripts/cache-key.sh | tee cache-key.txt
-          echo "hash=$(sha256sum cache-key.txt | cut -c 1-16)" >> "${GITHUB_OUTPUT}"
+          scripts/build-inputs.sh | tee build-inputs.txt
+          echo "hash=$(sha256sum build-inputs.txt | cut -c 1-16)" >> "${GITHUB_OUTPUT}"
 
       - name: Restore build
         if: ${{ !inputs.fresh_build }}
@@ -149,8 +149,8 @@ jobs:
           path: |
             ${{ env.BUILD_DIR }}
             !${{ env.BUILD_DIR }}/toolchain/rustup-prefix
-          key: ${{ needs.sources.outputs.target }}-build-${{ matrix.march }}-${{ needs.sources.outputs.llvm }}-${{ steps.cache_key.outputs.hash }}-${{ github.run_id }}
-          restore-keys: ${{ needs.sources.outputs.target }}-build-${{ matrix.march }}-${{ needs.sources.outputs.llvm }}-${{ steps.cache_key.outputs.hash }}-
+          key: ${{ needs.sources.outputs.target }}-build-${{ matrix.march }}-${{ needs.sources.outputs.llvm }}-${{ steps.build_inputs.outputs.hash }}-${{ github.run_id }}
+          restore-keys: ${{ needs.sources.outputs.target }}-build-${{ matrix.march }}-${{ needs.sources.outputs.llvm }}-${{ steps.build_inputs.outputs.hash }}-
 
       - name: Restore ccache
         uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
@@ -184,7 +184,7 @@ jobs:
         if: ${{ always() }}
         run: |
           mkdir -p "${LOGS_DIR}"
-          cp -f cache-key.txt "${LOGS_DIR}/" || true
+          cp -f build-inputs.txt "${LOGS_DIR}/" || true
           ccache --dir ccache --print-stats > "${LOGS_DIR}/ccache-stats.txt" || true
           find "${BUILD_DIR}" -type f \( -iname "*-*.log" -o -wholename "*/ffbuild/config.log" \) \
             -exec cp -f -t "${LOGS_DIR}" {} + || true
@@ -205,7 +205,7 @@ jobs:
           path: |
             ${{ env.BUILD_DIR }}
             !${{ env.BUILD_DIR }}/toolchain/rustup-prefix
-          key: ${{ needs.sources.outputs.target }}-build-${{ matrix.march }}-${{ needs.sources.outputs.llvm }}-${{ steps.cache_key.outputs.hash }}-${{ github.run_id }}
+          key: ${{ needs.sources.outputs.target }}-build-${{ matrix.march }}-${{ needs.sources.outputs.llvm }}-${{ steps.build_inputs.outputs.hash }}-${{ github.run_id }}
 
       - name: Save ccache
         id: save_ccache
@@ -220,7 +220,7 @@ jobs:
         if: ${{ always() && steps.save_build.outcome == 'success' }}
         run: |
           gh cache list --key ${{ needs.sources.outputs.target }}-build-${{ matrix.march }}- --limit 100 --json key \
-            --jq '.[].key | select(. != "${{ needs.sources.outputs.target }}-build-${{ matrix.march }}-${{ needs.sources.outputs.llvm }}-${{ steps.cache_key.outputs.hash }}-${{ github.run_id }}")' \
+            --jq '.[].key | select(. != "${{ needs.sources.outputs.target }}-build-${{ matrix.march }}-${{ needs.sources.outputs.llvm }}-${{ steps.build_inputs.outputs.hash }}-${{ github.run_id }}")' \
             | xargs -r -n 1 gh cache delete
 
       - name: Delete older ccache caches

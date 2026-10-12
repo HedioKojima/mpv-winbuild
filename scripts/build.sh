@@ -1,8 +1,8 @@
 #!/bin/bash
 # Configure and build the runtimes and packages for a target CPU. The commits of
 # the git sources are written to build/<cpu>/revisions.txt. When the output of
-# cache-key.sh differs from build/<cpu>/cache-key.txt, the build directory is
-# emptied first.
+# build-inputs.sh differs from build/<cpu>/build-inputs.txt, the build directory
+# is emptied first.
 #
 # Usage: build.sh [--march <cpu>] [--mtune <cpu>] [--llvm-version <major>]
 #                 [--revisions <file>] [--sources-only] [buildroot]
@@ -51,7 +51,7 @@ done
 mkdir -p "${buildroot}"
 buildroot="$(cd "${buildroot}" && pwd)"
 build_dir="${buildroot}/build/${march}"
-cache_key_file="${build_dir}/cache-key.txt"
+build_inputs_file="${build_dir}/build-inputs.txt"
 
 configure() {
   echo ">> Configure -march=${march} -mtune=${mtune} in ${build_dir}"
@@ -86,17 +86,17 @@ if [[ "${sources_only}" == true ]]; then
   exit 0
 fi
 
-# The key covers the mingw-w64 commit, so it is computed after the update.
-cache_key="$("${repo_root}/scripts/cache-key.sh" \
+# The inputs include the mingw-w64 commit, so they are read after the update.
+build_inputs="$("${repo_root}/scripts/build-inputs.sh" \
   --llvm-version "${llvm_version}" "${buildroot}")"
-if [[ "${configured}" == true ]] && [[ ! -f "${cache_key_file}" \
-  || "$(< "${cache_key_file}")" != "${cache_key}" ]]; then
-  echo ">> Start from an empty build directory: cache-key.sh output changed"
+if [[ "${configured}" == true ]] && [[ ! -f "${build_inputs_file}" \
+  || "$(< "${build_inputs_file}")" != "${build_inputs}" ]]; then
+  echo ">> Start from an empty build directory: build-inputs.sh output changed"
   rm -rf "${build_dir:?}"
   configure
   ninja -C "${build_dir}" revisions
 fi
-echo "${cache_key}" > "${cache_key_file}"
+echo "${build_inputs}" > "${build_inputs_file}"
 
 echo ">> Build"
 ccache --dir "${buildroot}/ccache" --max-size "${CCACHE_MAXSIZE}"
