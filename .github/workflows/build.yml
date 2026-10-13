@@ -104,6 +104,7 @@ jobs:
           - march: znver3_cropdetect-vk
             mtune: znver3
             ref: cropdetect-vk
+    continue-on-error: ${{ matrix.ref != null }}
     env:
       GH_TOKEN: ${{ github.token }}
       BUILD_DIR: build/${{ matrix.march }}
